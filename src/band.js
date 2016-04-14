@@ -32,6 +32,7 @@ var Band = React.createClass({
       <div className="band">
         <h1>{ this.props.children }</h1>
         <Setlist data={this.props.data} />
+        <SongForm />
       </div>
     );
   }
