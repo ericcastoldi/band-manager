@@ -4,7 +4,7 @@ var  Setlist = React.createClass({
       
       return (
         <li>
-          <Song artist={song.artist} song={song.song} tags={song.tags} />
+          <Song artist={song.artist} song={song.song} tags={song.tags.join(', ')} />
         </li>
       );
 

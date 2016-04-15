@@ -40,9 +40,14 @@
         ]
     },
     {
-        "id": 1460681017615,
+        "id": 1460745921061,
         "artist": "Guns n' Roses",
         "song": "Sweet Child O' Mine",
-        "tags": "80s, rock, hard rock, pop"
+        "tags": [
+            "80's",
+            "Hard Rock",
+            "Pop",
+            "Classic"
+        ]
     }
 ]

@@ -24,7 +24,9 @@ var SongForm = React.createClass({
     }
 
     var artist = this.state.artist.trim();
-    var tags = this.state.tags.trim();
+    var tags = this.state.tags.split(',').map(function(tag) {
+      return tag.trim();
+    });
 
     this.props.onNewSongAdded({artist: artist, song: song, tags: tags});
     
