@@ -26,7 +26,8 @@ var SongForm = React.createClass({
     var artist = this.state.artist.trim();
     var tags = this.state.tags.trim();
 
-    // TODO: send request to the server
+    this.props.onNewSongAdded({artist: artist, song: song, tags: tags});
+    
     this.setState(this.getInitialState());
   },
   render: function(){

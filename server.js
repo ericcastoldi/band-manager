@@ -83,6 +83,31 @@ app.get('/api/setlist', function(req, res) {
   });
 });
 
+app.post('/api/setlist', function(req, res) {
+  fs.readFile(SETLIST_FILE, function(err, data) {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+
+    var setlist = JSON.parse(data);
+
+    var newSong = {
+      id: Date.now(),
+      artist: req.body.artist,
+      song: req.body.song,
+      tags: req.body.tags,
+    };
+    setlist.push(newSong);
+    fs.writeFile(SETLIST_FILE, JSON.stringify(setlist, null, 4), function(err) {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      }
+      res.json(setlist);
+    });
+  });
+});
 
 
 app.listen(app.get('port'), function() {
