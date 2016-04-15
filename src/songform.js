@@ -54,7 +54,7 @@ var SongForm = React.createClass({
                 onChange={this.tagsChanged}
                 />
 
-        <input type="submit" value="Adicionar" />
+        <input type="submit" value="Adicionar" className="button-primary" />
       </form>
     );
   }

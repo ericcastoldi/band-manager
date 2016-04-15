@@ -49,5 +49,17 @@
             "Pop",
             "Classic"
         ]
+    },
+    {
+        "id": 1460756725051,
+        "artist": "Oasis",
+        "song": "Don't Go Away",
+        "tags": [
+            "indie",
+            "sad",
+            "blue",
+            "melancholy",
+            "200's"
+        ]
     }
 ]
