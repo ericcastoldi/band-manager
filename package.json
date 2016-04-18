@@ -6,7 +6,6 @@
     "babelify": "^7.2.0",
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
-    "http-server": "^0.9.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "skeleton-css": "^2.0.4"
@@ -15,4 +14,7 @@
     "babel-preset-react": "^6.5.0",
     "browserify": "^13.0.0"
   },
+  "scripts": {
+    "build" : "babel src/views --out-dir public/views --presets react"
+  }
 }
