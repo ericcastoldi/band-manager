@@ -49,6 +49,6 @@ var Band = React.createClass({
 });
 
 ReactDOM.render(
-  <Band  url="http://localhost:3000/api/setlist">krushing demons</Band>,
+  <Band url="http://localhost:3000/api/setlist">krushing demons</Band>,
   document.getElementById('content')
 );
