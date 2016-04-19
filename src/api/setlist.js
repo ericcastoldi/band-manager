@@ -24,7 +24,7 @@ exports.save = function(req, res) {
   };
 
   withRepo(function(setlistRepo){
-  	setlistRepo.add(newMember, function(data){
+  	setlistRepo.add(newSong, function(data){
     	res.json(data);
   	});
   });
