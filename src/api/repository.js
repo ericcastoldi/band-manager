@@ -23,6 +23,22 @@ function Repository(jsonFilePath){
 		});
 	}
 
+	this.update = function(obj, where){
+		
+		var found = function(persistedObj, data){
+			persistedObj = obj;
+			writeJsonFile(data);
+		};
+
+		var notFound = function(data){
+			data.push(obj);
+			writeJsonFile(data);
+		};
+
+
+		this.find(where, found, notFound);
+	}
+
 	this.find = function(where, found, notFound){
 		this.all(function(data){
 			
@@ -36,16 +52,6 @@ function Repository(jsonFilePath){
 			};
 
 			notFound(data);
-		});
-	}
-
-	this.update = function(obj, where){
-		this.find(where, function(persistedObj, data){
-			persistedObj = obj;
-			writeJsonFile(data);
-		}, function(data){
-			data.push(obj);
-			writeJsonFile(data);
 		});
 	}
 
