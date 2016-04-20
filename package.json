@@ -14,12 +14,14 @@
     "babel-preset-react": "^6.5.0",
     "browserify": "^13.0.0",
     "chai": "^3.5.0",
+    "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
     "mock-require": "^1.2.1",
     "sinon": "^1.17.3"
   },
   "scripts": {
     "build": "babel src/views --out-dir public/views --presets react",
-    "test": "mocha --recursive"
+    "test": "mocha --recursive",
+    "cover": "node ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --recursive"
   }
 }
