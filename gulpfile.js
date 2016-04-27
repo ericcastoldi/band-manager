@@ -8,6 +8,23 @@ var reactify = require('reactify');
 var browserify = require('browserify');
 var nodemon = require('gulp-nodemon');
 var run = require('gulp-run');
+var eslint = require('gulp-eslint');
+
+gulp.task('lint', function(){
+  return gulp
+    .src('src/**')
+    .pipe(eslint())
+    .pipe(eslint.result(function (result) {
+      // Called for each ESLint result. 
+      console.log('ESLint result: ' + result.filePath);
+      console.log('# Messages: ' + result.messages.length);
+      console.log('# Warnings: ' + result.warningCount);
+      console.log('# Errors: ' + result.errorCount);
+    }))
+    .pipe(eslint.format())
+
+    .pipe(eslint.failOnError());
+});
 
 gulp.task('init-istanbul', function () {
   return gulp.src(['src/api/*.js'])
