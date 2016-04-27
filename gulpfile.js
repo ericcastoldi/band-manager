@@ -22,7 +22,6 @@ gulp.task('lint', function(){
       console.log('# Errors: ' + result.errorCount);
     }))
     .pipe(eslint.format())
-
     .pipe(eslint.failOnError());
 });
 
