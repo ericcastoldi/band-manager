@@ -6,4 +6,5 @@ before_script:
 script: "gulp cover"
 after_success:
   - "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
-  - "codeclimate < ./coverage/lcov.info"
+  - "npm install codeclimate-test-reporter"
+  - "codeclimate-test-reporter < coverage/lcov.info"
