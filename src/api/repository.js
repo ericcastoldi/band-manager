@@ -62,7 +62,6 @@ function Repository(jsonFilePath){
 	var handleError = function(err){
 		if (err) {
 		    console.error(err);
-		    throw err;
 		}
 	}
 }
