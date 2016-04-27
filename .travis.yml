@@ -3,3 +3,6 @@ node_js:
   - "5.10.0"
 script: "gulp cover"
 after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+addons:
+    code_climate:
+        repo_token: 36cb2a5a945ee1476ed6d7681b705ad92636c2add8fb02210ca1e5ffe9808117
