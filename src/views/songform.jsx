@@ -35,28 +35,33 @@ var SongForm = React.createClass({
     this.setState(this.getInitialState());
   },
   render: function(){
+    
+    var inputs = [
+      { key: 'songform-artist', placeholder: 'Artista', value:this.state.artist, changed:this.artistChanged },
+      { key: 'songform-song', placeholder: 'Música', value:this.state.song, changed: this.songChanged},
+      { key: 'songform-tags', placeholder: 'tags... 80s, rock, love songs, etc.', value:this.state.tags, changed: this.tagsChanged}
+    ];
+
+    var renderedInputs = inputs.map(function (input) {
+      
+      return (
+        <input  type="text" 
+                placeholder={input.placeholder}
+                value={input.value}
+                onChange={input.changed}
+                key={input.key}
+                />
+      );
+
+    });
+
     return (
       <form className="songform" onSubmit={this.addSong}>
         
-        <input  type="text" 
-                placeholder="Artista..." 
-                value={this.state.artist}
-                onChange={this.artistChanged}
-                />
-
-        <input type="text" 
-               placeholder="Música..." 
-               value={this.state.song}
-               onChange={this.songChanged}
-               />
-
-        <input  type="text" 
-                placeholder="tags... 80s, rock, love songs, etc." 
-                value={this.state.tags}
-                onChange={this.tagsChanged}
-                />
+        { renderedInputs }
 
         <input type="submit" value="Adicionar" className="button-primary" />
+
       </form>
     );
   }

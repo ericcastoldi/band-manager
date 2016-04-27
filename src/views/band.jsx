@@ -15,7 +15,7 @@ var Band = React.createClass({
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
-      error: this.handleError.bind(this)
+      error: this.handleError
     });
   },
 
@@ -36,7 +36,7 @@ var Band = React.createClass({
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
-      error: this.handleError.bind(this)
+      error: this.handleError
     });
   },
 

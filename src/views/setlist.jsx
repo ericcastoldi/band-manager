@@ -7,7 +7,7 @@ var  Setlist = React.createClass({
     var songs = this.props.data.map(function (song) {
       
       return (
-        <tr>
+        <tr key={song.id}>
           <td>
             <Song artist={song.artist} song={song.song} tags={song.tags.join(', ')} />
           </td>
