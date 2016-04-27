@@ -1,4 +1,13 @@
-var jsdom = require('jsdom');
+module.exports = function(markup) {
+  if (typeof document !== 'undefined') return;
 
-global.document = jsdom.jsdom('<!doctype html><html><body><div id="content"></div></body></html>');
-global.window = document.parentWindow;
+  var defaultMarkup = '<!doctype html><html><body><div id="content"></div></body></html>';
+
+  var jsdom = require('jsdom').jsdom;
+
+  global.document = jsdom(markup || defaultMarkup);
+  global.window = document.defaultView;
+  global.navigator = {
+    userAgent: 'node.js'
+  };
+};
