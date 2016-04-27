@@ -2,7 +2,7 @@ var fs = require('fs');
 var path = require('path');
 
 function Repository(jsonFilePath){
-	
+
 	var REPO_FILE = jsonFilePath;
 
 	this.all = function(done){
@@ -49,7 +49,7 @@ function Repository(jsonFilePath){
 					return;
 				}
 
-			};
+			}
 
 			notFound(data);
 		});
@@ -62,7 +62,6 @@ function Repository(jsonFilePath){
 	var handleError = function(err){
 		if (err) {
 		    console.error(err);
-		    process.exit(1);
 		}
 	}
 }

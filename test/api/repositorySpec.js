@@ -34,7 +34,6 @@ describe('Repository', function(){
 	 		var err = new Error();
 			fileSystemMock.readFile = function(p, cb) { cb(err, null); };
 			
-			var processStub = sinon.stub(process, "exit");
 	 		var consoleErrorStub = sinon.stub(console, 'error');
 
 			var jsonFilePath = 'path-to-file';
@@ -45,10 +44,6 @@ describe('Repository', function(){
 			expect(consoleErrorStub.calledOnce).to.be.true;
 	 		expect(consoleErrorStub.calledWithExactly(err)).to.be.true;
 
-			expect(processStub.calledOnce).to.be.true;
-	 		expect(processStub.calledWithExactly(1)).to.be.true;
-
-	 		processStub.restore()
 	 		consoleErrorStub.restore();
 	 	});
 	});

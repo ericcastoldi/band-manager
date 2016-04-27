@@ -20,7 +20,7 @@ exports.save = function(req, res) {
       id: Date.now(),
       artist: req.body.artist,
       song: req.body.song,
-      tags: req.body.tags,
+      tags: req.body.tags
   };
 
   withRepo(function(setlistRepo){
