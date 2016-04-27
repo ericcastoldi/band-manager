@@ -12,7 +12,7 @@ var eslint = require('gulp-eslint');
 
 gulp.task('lint', function(){
   return gulp
-    .src('src/**')
+    .src(['**/*.{js,jsx}','!node_modules/**', '!public/**', '!test/**'])
     .pipe(eslint())
     .pipe(eslint.result(function (result) {
       // Called for each ESLint result. 
@@ -63,7 +63,7 @@ gulp.task('browserify-jsx', ['clean', 'install-dependencies'], function() {
     .pipe(gulp.dest('public'));
 });
 
-gulp.task('launch', ['browserify-jsx'], function (cb) {
+gulp.task('launch', ['browserify-jsx'], function () {
   
   var started = false;
   
@@ -71,7 +71,6 @@ gulp.task('launch', ['browserify-jsx'], function (cb) {
     script: 'app.js'
   }).on('start', function () {
     if (!started) {
-      cb();
       started = true; 
     } 
   });
