@@ -1,9 +1,11 @@
+var React = require('react');
+var Setlist = require('./setlist.jsx');
+var SongForm = require('./songform.jsx');
+
 var Band = React.createClass({
-
-  var handleError = function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      };
-
+  handleError : function(xhr, status, err) {
+    console.error(this.props.url, status, err.toString());
+  },
 
   loadSetList: function(){
     $.ajax({
@@ -13,7 +15,7 @@ var Band = React.createClass({
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
-      error: handleError.bind(this)
+      error: this.handleError.bind(this)
     });
   },
 
@@ -34,7 +36,7 @@ var Band = React.createClass({
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
-      error: handleError.bind(this)
+      error: this.handleError.bind(this)
     });
   },
 
@@ -47,9 +49,8 @@ var Band = React.createClass({
       </div>
     );
   }
+
+  
 });
 
-ReactDOM.render(
-  <Band url="http://localhost:3000/api/setlist">krushing demons</Band>,
-  document.getElementById('content')
-);
+module.exports = Band;

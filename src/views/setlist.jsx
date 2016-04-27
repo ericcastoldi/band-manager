@@ -1,3 +1,6 @@
+var React = require('react');
+var Song = require('./song.jsx');
+
 var  Setlist = React.createClass({
   render : function(){
 
@@ -27,3 +30,5 @@ var  Setlist = React.createClass({
       );
   }
 });
+
+module.exports = Setlist;

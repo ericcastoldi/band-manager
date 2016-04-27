@@ -1,10 +1,13 @@
 var gulp = require('gulp');
-var babel = require('gulp-babel');
 var del = require('del');
 var mocha = require('gulp-mocha');
 var gutil = require('gulp-util');
 var istanbul = require('gulp-istanbul');
-
+var source = require('vinyl-source-stream');
+var reactify = require('reactify');
+var browserify = require('browserify');
+var nodemon = require('gulp-nodemon');
+var run = require('gulp-run');
 
 gulp.task('init-istanbul', function () {
   return gulp.src(['src/api/*.js'])
@@ -29,13 +32,36 @@ gulp.task('watch-mocha', function() {
 });
 
 gulp.task('clean', function () {
-  return del(['dist', 'build', 'coverage', 'public/views']);
+  return del(['dist', 'build', 'coverage', 'public/views', 'public/application.js']);
 });
 
-gulp.task('build-jsx', function () {
-  return  gulp.src('src/views/*.jsx')
-        .pipe(babel({
-            presets: ['react']
-        }))
-        .pipe(gulp.dest('public/views'));
+gulp.task('browserify-jsx', ['clean', 'install-dependencies'], function() {
+  return browserify({
+      entries: 'src/views/app.jsx',
+      debug: true,
+      transform: [reactify]
+    })
+    .bundle()
+    .pipe(source('application.js'))
+    .pipe(gulp.dest('public'));
 });
+
+gulp.task('launch', ['browserify-jsx'], function (cb) {
+  
+  var started = false;
+  
+  return nodemon({
+    script: 'app.js'
+  }).on('start', function () {
+    if (!started) {
+      cb();
+      started = true; 
+    } 
+  });
+});
+
+gulp.task('install-dependencies', function(){
+  return run('npm install').exec();
+})
+
+gulp.task('default', ['launch'], function(){});

@@ -1,3 +1,5 @@
+var React = require('react');
+
 var SongForm = React.createClass({
   getInitialState : function() {
       return {
@@ -59,3 +61,5 @@ var SongForm = React.createClass({
     );
   }
 });
+
+module.exports = SongForm;
