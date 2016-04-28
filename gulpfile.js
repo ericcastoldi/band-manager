@@ -24,6 +24,7 @@ gulp.task('clean', function () {
   return del(['dist', 'build', 'coverage', 'public/views', 'public/application.js']);
 });
 
+
 gulp.task('lint', function(){
   return gulp
     .src(['**/*.{js,jsx}', '!coverage/**', '!node_modules/**', '!public/**', '!test/**'])
