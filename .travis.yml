@@ -1,7 +1,7 @@
 language: node_js
 node_js:
   - "5.10.0"
-script: "gulp cover"
+script: "gulp travis"
 after_success:
   - "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   - "npm install codeclimate-test-reporter"

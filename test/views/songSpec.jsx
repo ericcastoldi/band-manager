@@ -1,13 +1,12 @@
-require('./fakedom')('<html><body></body></html>');
+require('./fakedom')();
 var expect = require('chai').expect;
 var React = require('react');
 var ReactTestUtils = require('react-addons-test-utils');
+var Song = require('../../src/views/song.jsx');
 
 describe('Song component', function(){
 
   before('render and locate element', function() {
-    var Song = require('../../src/views/song.jsx');
-    
     var songComponentElementTree = ReactTestUtils.renderIntoDocument(
       <Song artist="The Artist" song="Singin' Songs About The Future" tags="reggae, power" />
     );
@@ -26,6 +25,7 @@ describe('Song component', function(){
   it('should render an <em> element with the song description formatted as "Artist - Song".', function() {
     
     var em = this.songDivElement.children[0];
+
     expect(em.tagName).to.equal('EM');
     expect(em.textContent).to.equal('The Artist - Singin\' Songs About The Future');
 
@@ -34,6 +34,7 @@ describe('Song component', function(){
   it('should render an <small> element with the comma-separated song tags.', function() {
     
     var small = this.songDivElement.children[1];
+    
     expect(small.tagName).to.equal('SMALL');
     expect(small.textContent).to.equal('reggae, power');
 
