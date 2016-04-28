@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var babel = require('babel-core/register');
 var del = require('del');
 var mocha = require('gulp-mocha');
 var gutil = require('gulp-util');
@@ -9,6 +10,7 @@ var browserify = require('browserify');
 var nodemon = require('gulp-nodemon');
 var run = require('gulp-run');
 var eslint = require('gulp-eslint');
+
 
 gulp.task('lint', function(){
   return gulp
@@ -35,6 +37,15 @@ gulp.task('cover', ['init-istanbul'], function () {
   return gulp.src(['test/api/*Spec.js'])
     .pipe(mocha({reporter: 'spec'}))
     .pipe(istanbul.writeReports({ reporters: [ 'lcov' ] }));
+});
+
+gulp.task('test-jsx', function () {
+  return gulp.src('test/views/*Spec.js', { read: false })
+    .pipe(mocha({
+      compilers: {
+        js: babel
+      }
+    }));
 });
 
 gulp.task('mocha', function() {
