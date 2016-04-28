@@ -26,6 +26,7 @@ describe('Song component', function(){
   it('should render an <em> element with the song description formatted as "Artist - Song".', function() {
     
     var em = this.songDivElement.children[0];
+
     expect(em.tagName).to.equal('EM');
     expect(em.textContent).to.equal('The Artist - Singin\' Songs About The Future');
 
@@ -34,6 +35,7 @@ describe('Song component', function(){
   it('should render an <small> element with the comma-separated song tags.', function() {
     
     var small = this.songDivElement.children[1];
+
     expect(small.tagName).to.equal('SMALL');
     expect(small.textContent).to.equal('reggae, power');
 
