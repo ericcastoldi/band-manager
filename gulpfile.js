@@ -88,7 +88,7 @@ gulp.task('travis', function(done){
 });
 
 gulp.task('tdd', function(done) {
-  gulp.watch([ TEST_FILES, SRC_FILES ], ['qa']).on('error', gutil.log);
+  gulp.watch([ TEST_FILES, SRC_FILES ], ['test']).on('error', gutil.log);
 });
 
 

@@ -3,3 +3,4 @@ node_modules/
 public/views/
 coverage/
 public/application.js
+.sublime-gulp.cache
