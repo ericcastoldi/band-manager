@@ -1,6 +1,5 @@
 npm-debug.log
 node_modules/
-public/views/
+public/
 coverage/
-public/application.js
 .sublime-gulp.cache
