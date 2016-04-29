@@ -14,11 +14,7 @@ function Repository(jsonFilePath){
 
 	this.add = function(obj, done){
 		this.all(function(data){
-		
-			data.push(obj);
-
-			writeJsonFile(data);
-
+			addNew(data, obj);
 			done(data);
 		});
 	}
@@ -26,15 +22,16 @@ function Repository(jsonFilePath){
 	this.update = function(obj, where){
 		
 		var found = function(persistedObj, data){
-			persistedObj = obj;
+
+		    var index = data.findIndex(where);
+     		data.splice(index, 1, obj);
+
 			writeJsonFile(data);
 		};
 
 		var notFound = function(data){
-			data.push(obj);
-			writeJsonFile(data);
+			addNew(data, obj);
 		};
-
 
 		this.find(where, found, notFound);
 	}
@@ -42,18 +39,20 @@ function Repository(jsonFilePath){
 	this.find = function(where, found, notFound){
 		this.all(function(data){
 			
-			for (var i = data.length - 1; i >= 0; i--) {
-				
-				if(where(data[i])){
-					found(data[i], data);
-					return;
-				}
-
+			var obj = data.find(where);
+			if (obj) {
+				found(obj, data);
+				return;
 			}
-
+			
 			notFound(data);
 		});
 	}
+
+	var addNew = function(data, obj){
+		data.push(obj);
+		writeJsonFile(data);
+	};
 
 	var writeJsonFile = function(data){
 		fs.writeFile(REPO_FILE, JSON.stringify(data, null, 4), handleError);
