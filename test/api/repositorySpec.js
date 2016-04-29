@@ -19,7 +19,6 @@ describe('Repository', function(){
 			this.readFileSpy = sinon.spy(fileSystemMock, 'readFile');
 		 	this.jsonFilePath = 'path-to-file';
 		 	this.repo = new Repository(this.jsonFilePath);
-
 		 	this.repo.all(this.doneSpy);
 
   		});
@@ -106,6 +105,7 @@ describe('Repository', function(){
 			this.find = function(where, found, notFound){};
 			this.where = function(obj){ return obj.key == 123  };
 			this.whereSpy = sinon.spy();
+			
 			this.persistedData = [{key: 123, value: 'abc'}, {key: 456, value: 'def'}];
 
 			this.jsonFilePath = 'path-to-file';
@@ -113,6 +113,7 @@ describe('Repository', function(){
   		});
 		
 		beforeEach('refresh the writeFileSpy', function(){ 
+			this.doneSpy = sinon.spy();
 			this.writeFileSpy = sinon.spy(fileSystemMock, 'writeFile'); 
 		});
 		
@@ -128,7 +129,7 @@ describe('Repository', function(){
 			this.findStub = sinon.stub(this.repo, "find", find);
 			
 			// act!
-			this.repo.update({key:999, value:'updated'}, this.where)
+			this.repo.update({key:999, value:'updated'}, this.where, this.doneSpy)
 			
 			expect(this.persistedData.length).to.equal(2);
 			expect(this.persistedData[0].key).to.equal(999);
@@ -136,6 +137,9 @@ describe('Repository', function(){
 
 			expect(this.writeFileSpy.calledOnce).to.be.true;
 			expect(this.findStub.calledWith(this.where)).to.be.true;
+
+			expect(this.doneSpy.calledOnce).to.be.true;
+			expect(this.doneSpy.calledWithExactly(this.persistedData)).to.be.true;
 		});
 
 		it('should push the new obj into the data collection when it doesn\'t already exists.', function(){
@@ -144,7 +148,7 @@ describe('Repository', function(){
 			this.findStub = sinon.stub(this.repo, "find", find);
 
 			// act!
-			this.repo.update({key:789, value:'new value'}, this.whereSpy);
+			this.repo.update({key:789, value:'new value'}, this.whereSpy, this.doneSpy);
 			
 			expect(this.persistedData.length).to.equal(3);
 			expect(this.persistedData[2].key).to.equal(789);
@@ -152,6 +156,9 @@ describe('Repository', function(){
 			
 			expect(this.writeFileSpy.calledOnce).to.be.true;
 			expect(this.findStub.calledWith(this.whereSpy)).to.be.true;
+
+			expect(this.doneSpy.calledOnce).to.be.true;
+			expect(this.doneSpy.calledWithExactly(this.persistedData)).to.be.true;
 		});
 
 
