@@ -21,7 +21,7 @@ var TEST_FILES = 'test/**/*Spec.{jsx,js}';
 var SRC_FILES = 'src/**/*.{jsx,js}';
 
 gulp.task('clean', function () {
-  return del(['dist', 'build', 'coverage', 'public/views', 'public/application.js']);
+  return del(['dist', 'build', 'coverage', 'public']);
 });
 
 
@@ -54,9 +54,9 @@ gulp.task('init-istanbul', function () {
 });
 
 
-gulp.task('browserify', ['clean'], function() {
+gulp.task('browserify', function() {
   return browserify({
-      entries: 'src/views/app.jsx',
+      entries: 'src/components/app.jsx',
       debug: true,
       transform: [reactify]
     })
@@ -65,7 +65,12 @@ gulp.task('browserify', ['clean'], function() {
     .pipe(gulp.dest('public'));
 });
 
-gulp.task('launch', ['browserify'], function () {
+gulp.task('copy-webapp', function(){
+  return gulp.src('webapp/**')
+    .pipe(gulp.dest('public'));
+});
+
+gulp.task('launch', function () {
   
   var started = false;
   
@@ -78,13 +83,15 @@ gulp.task('launch', ['browserify'], function () {
   });
 });
 
-gulp.task('default', ['launch'], function(){});
+gulp.task('default', ['clean'], function(done){
+  runSequence('copy-webapp', 'browserify', 'launch', done)
+});
 
-gulp.task('qa', ['clean'], function(done){
+gulp.task('qa', function(done){
   runSequence('lint', 'test', done);
 });
 
-gulp.task('travis', function(done){
+gulp.task('travis', ['clean'], function(done){
   runSequence('qa', 'cover', done);
 });
 

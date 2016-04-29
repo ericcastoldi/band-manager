@@ -45,4 +45,4 @@ function Setlist(){
   }
 }
 
-module.exports = Setlist;
+module.exports = new Setlist();

@@ -105,7 +105,7 @@ describe('Repository', function(){
 			this.find = function(where, found, notFound){};
 			this.where = function(obj){ return obj.key == 123  };
 			this.whereSpy = sinon.spy();
-			
+
 			this.persistedData = [{key: 123, value: 'abc'}, {key: 456, value: 'def'}];
 
 			this.jsonFilePath = 'path-to-file';
