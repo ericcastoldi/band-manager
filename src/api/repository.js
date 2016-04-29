@@ -19,7 +19,7 @@ function Repository(jsonFilePath){
 		});
 	}
 
-	this.update = function(obj, where){
+	this.update = function(obj, where, done){
 		
 		var found = function(persistedObj, data){
 
@@ -27,10 +27,13 @@ function Repository(jsonFilePath){
      		data.splice(index, 1, obj);
 
 			writeJsonFile(data);
+
+			done(data);
 		};
 
 		var notFound = function(data){
 			addNew(data, obj);
+			done(data);
 		};
 
 		this.find(where, found, notFound);

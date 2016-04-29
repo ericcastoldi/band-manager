@@ -1,7 +1,8 @@
 var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
-var setlist = require('./src/api/setlist');
+var Setlist = require('./src/api/setlist');
+var setlist = new Setlist();
 
 var app = express();
 

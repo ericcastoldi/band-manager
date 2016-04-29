@@ -87,11 +87,11 @@ gulp.task('default', ['clean'], function(done){
   runSequence('copy-webapp', 'browserify', 'launch', done)
 });
 
-gulp.task('qa', ['clean'], function(done){
-  runSequence('lint', 'test', done);
+gulp.task('qa', ['lint', 'test'], function(){
+  //runSequence('lint', 'test', done);
 });
 
-gulp.task('travis', function(done){
+gulp.task('travis', ['clean'], function(done){
   runSequence('qa', 'cover', done);
 });
 
