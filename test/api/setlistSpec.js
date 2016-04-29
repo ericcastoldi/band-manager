@@ -19,14 +19,11 @@ exports.Repository = function() {
 	this.update = updateStub;
 };
 var repositoryStub = sinon.spy(exports, 'Repository');
-
+mock('../../src/api/repository', repositoryStub);
 
 var Setlist = require('../../src/api/setlist.js');
 describe('Setlist', function(){
 	
-	before('mock Repository', function(){
-		mock('../../src/api/repository', repositoryStub);
-	});
 
 	describe('constructor', function(){
 		before('create setlist', function(){

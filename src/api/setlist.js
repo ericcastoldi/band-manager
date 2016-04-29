@@ -1,6 +1,7 @@
+var Repository = require('./repository');
+
 function Setlist(){
   
-  var Repository = require('./repository');
   var SETLIST_FILE = 'src/data/setlist.json';
 
   var setlistRepo = new Repository(SETLIST_FILE);
@@ -24,7 +25,7 @@ function Setlist(){
   this.update = function(req, res) {
 
     var where = function(song){
-      return song.id == req.body.id;
+      return song.id === req.body.id;
     }
 
     setlistRepo.update(createSong(req.body), where, function(data){
@@ -45,4 +46,4 @@ function Setlist(){
   }
 }
 
-module.exports = new Setlist();
+module.exports = Setlist;
