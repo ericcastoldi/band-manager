@@ -123,6 +123,9 @@ describe('Setlist', function(){
 			expect(song.song).to.equal('The Song');
 			expect(song.tags[0]).to.equal('tag');
 			expect(song.tags[1]).to.equal('hash');
+
+			var where = updateStub.getCall(0).args[1];
+			expect(where(song)).to.be.true;
 		});
 
 		it('should call res.json() passing the data received from repository.all().', function(){
