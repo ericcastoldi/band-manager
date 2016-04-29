@@ -10,19 +10,10 @@ mock('fs', fileSystemMock);
 var Repository = require('../../src/api/repository.js');
 
 describe('Repository', function(){
-<<<<<<< HEAD
 
 	describe('all()', function(){
 
 		before('configure stubs, spies, repo and call method', function() {
-=======
-	
-
-
-	describe('all()', function(){
-
-		before('configure stubs and call method', function() {
->>>>>>> master
 
 			this.doneSpy = sinon.spy();
 			this.readFileSpy = sinon.spy(fileSystemMock, 'readFile');
@@ -31,11 +22,8 @@ describe('Repository', function(){
 
 		 	this.repo.all(this.doneSpy);
 
-<<<<<<< HEAD
   		});
-=======
-  	});
->>>>>>> master
+
 
 
 	 	it('should read a json file.', function(){
