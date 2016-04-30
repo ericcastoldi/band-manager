@@ -22,7 +22,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/api/setlist', setlist.all);
-app.post('/api/setlist', setlist.save);
+app.post('/api/setlist', setlist.update);
 
 
 app.listen(app.get('port'), function() {

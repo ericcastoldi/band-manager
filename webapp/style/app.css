@@ -10,3 +10,7 @@
 .song em {
 	display:block; 
 }
+
+.setlist tr:hover td {
+    background-color: rgba(30, 174, 219, 0.15);
+}

@@ -2,14 +2,20 @@ var React = require('react');
 var Song = require('./song.jsx');
 
 var  Setlist = React.createClass({
-  render : function(){
 
+  rowClicked: function(song) {
+    console.log('rowClicked' + JSON.stringify(song));
+    this.props.onSongSelected(song);
+  },
+
+  render : function(){
+    var self = this;
     var songs = this.props.data.map(function (song) {
       
       return (
-        <tr key={song.id}>
+        <tr key={song.id} onClick={self.rowClicked.bind(self, song)}>
           <td>
-            <Song artist={song.artist} song={song.song} tags={song.tags.join(', ')} />
+            <Song artist={song.artist} song={song.song} tags={song.tags} />
           </td>
         </tr>
       );
@@ -17,7 +23,7 @@ var  Setlist = React.createClass({
     });
 
     return (
-      <table className="u-full-width">
+      <table className="u-full-width setlist">
         <thead>
           <tr>
             <th>Músicas</th>

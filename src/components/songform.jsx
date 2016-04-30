@@ -9,13 +9,21 @@ var SongForm = React.createClass({
       };
   },
   artistChanged: function (e) {
-    this.setState({artist: e.target.value});
+    //this.setState({artist: e.target.value});
+    var song = this.props.song;
+    song.artist = e.target.value;
+    this.props.songChanged(song);
   },
   songChanged: function (e) {
-    this.setState({song: e.target.value});
+    //this.setState({song: e.target.value});
+    var song = this.props.song;
+    song.song = e.target.value;
+    this.props.songChanged(song);
   },
   tagsChanged: function (e) {
-    this.setState({tags: e.target.value});
+    var song = this.props.song;
+    song.tags = e.target.value;
+    this.props.songChanged(song);
   },
   addSong: function(e){
     e.preventDefault();
@@ -37,9 +45,9 @@ var SongForm = React.createClass({
   render: function(){
     
     var inputs = [
-      { key: 'songform-artist', placeholder: 'Artista', value:this.state.artist, changed:this.artistChanged },
-      { key: 'songform-song', placeholder: 'Música', value:this.state.song, changed: this.songChanged},
-      { key: 'songform-tags', placeholder: 'tags... 80s, rock, love songs, etc.', value:this.state.tags, changed: this.tagsChanged}
+      { key: 'songform-artist', placeholder: 'Artista', value:this.props.song.artist, changed:this.artistChanged },
+      { key: 'songform-song', placeholder: 'Música', value:this.props.song.song, changed: this.songChanged},
+      { key: 'songform-tags', placeholder: 'tags... 80s, rock, love songs, etc.', value:this.props.song.tags, changed: this.tagsChanged}
     ];
 
     var renderedInputs = inputs.map(function (input) {

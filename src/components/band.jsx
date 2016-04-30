@@ -19,8 +19,13 @@ var Band = React.createClass({
     });
   },
 
+  songSelected: function(song){
+    console.log('songSelected' + JSON.stringify(song));
+    this.setState({selectedSong: song});
+  },
+
   getInitialState: function(){
-    return { data: [] };
+    return { data: [], selectedSong: {} };
   },
 
   componentDidMount: function() {
@@ -40,12 +45,23 @@ var Band = React.createClass({
     });
   },
 
+  songChanged : function(song){
+    console.log(song);
+    this.setState({selectedSong:song})
+  },
+
   render: function() {
     return (
       <div className="band">
         <h1>{ this.props.children }</h1>
-        <Setlist data={this.state.data} />
-        <SongForm onNewSongAdded={this.newSongAdded} />
+        <Setlist 
+            onSongSelected={this.songSelected} 
+            data={this.state.data} />
+
+        <SongForm 
+            song={this.state.selectedSong} 
+            songChanged={this.songChanged}
+            onNewSongAdded={this.newSongAdded} />
       </div>
     );
   }
