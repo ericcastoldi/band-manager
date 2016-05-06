@@ -1,16 +1,5 @@
 var createStore = require('redux').createStore;
 
-var ADD_SONG = 'ADD_SONG';
-var SELECT_SONG = 'SELECT_SONG';
-
-function addSong(artist, song, tags) {
-  return { type: ADD_SONG, artist: artist, song: song, tags: tags };
-}
-
-function selectSong(id){
- return { type: SELECT_SONG, id:id } 
-}
-
 var initialSongs = [
     {
         id: 1388534400000,
@@ -34,16 +23,25 @@ var initialSongs = [
     }
   ];
 
-
 var initialState = {
   selectedSong: 1388534400000,
   songs: initialSongs
 };
 
 
+var ADD_SONG = 'ADD_SONG';
+var SELECT_SONG = 'SELECT_SONG';
+
+function addSong(artist, song, tags) {
+  return { type: ADD_SONG, artist: artist, song: song, tags: tags };
+}
+
+function selectSong(id){
+ return { type: SELECT_SONG, id:id } 
+}
 
 
-function setlist(state, action) {
+function setlistReducer(state, action) {
   switch (action.type) {
     case SELECT_SONG:
       return Object.assign({}, state, {
@@ -64,8 +62,13 @@ function setlist(state, action) {
   }
 }
 
-var store = createStore(setlist, initialState);
-module.exports = store;
+module.exports = {
+  store: createStore(setlistReducer, initialState),
+  actions: {
+    addSong: addSong,
+    selectSong: selectSong,
+  }
+};
 // console.log(store.getState());
 
 // // Every time the state changes, log it

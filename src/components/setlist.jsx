@@ -3,17 +3,18 @@ var Song = require('./song.jsx');
 
 var  Setlist = React.createClass({
 
-  rowClicked: function(song) {
-    console.log('rowClicked' + JSON.stringify(song));
-    this.props.onSongSelected(song);
+  rowClicked: function(id) {
+    console.log('rowClicked' + id);
+    this.props.selectSong(id);
   },
 
   render : function(){
     var self = this;
     var songs = this.props.data.map(function (song) {
+      var cssClass = self.props.selectedSong == song.id ? 'selected' : '';
 
       return (
-        <tr key={song.id} onClick={self.rowClicked.bind(self, song)}>
+        <tr key={song.id} className={cssClass} onClick={self.rowClicked.bind(self, song.id)}>
           <td>
             <Song artist={song.artist} song={song.song} tags={song.tags} />
           </td>
@@ -38,6 +39,8 @@ var  Setlist = React.createClass({
 });
 
 Setlist.propTypes = {
+  selectedSong: React.PropTypes.number,
+  selectSong: React.PropTypes.func,
   data: React.PropTypes.arrayOf(
     React.PropTypes.shape({
       id: React.PropTypes.number,
@@ -45,7 +48,6 @@ Setlist.propTypes = {
       song: React.PropTypes.string,
       tags: React.PropTypes.array
     })),
-    onSongSelected: React.PropTypes.func
 }
 
 module.exports = Setlist;
