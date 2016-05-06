@@ -59,8 +59,9 @@ var Band = React.createClass({
             data={this.state.data} />
 
         <SongForm 
-            song={this.state.selectedSong} 
-            songChanged={this.songChanged}
+            artist={this.state.selectedSong.artist}
+            song={this.state.selectedSong.song}
+            tags={this.state.selectedSong.tags} 
             onNewSongAdded={this.newSongAdded} />
       </div>
     );
@@ -68,5 +69,11 @@ var Band = React.createClass({
 
   
 });
+
+Band.propTypes = {
+  children: React.PropTypes.node.isRequired,
+  url: React.PropTypes.string.isRequired
+}
+
 
 module.exports = Band;

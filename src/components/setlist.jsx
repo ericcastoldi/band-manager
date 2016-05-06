@@ -11,7 +11,7 @@ var  Setlist = React.createClass({
   render : function(){
     var self = this;
     var songs = this.props.data.map(function (song) {
-      
+
       return (
         <tr key={song.id} onClick={self.rowClicked.bind(self, song)}>
           <td>
@@ -36,5 +36,16 @@ var  Setlist = React.createClass({
       );
   }
 });
+
+Setlist.propTypes = {
+  data: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      id: React.PropTypes.number,
+      artist: React.PropTypes.string,
+      song: React.PropTypes.string,
+      tags: React.PropTypes.array
+    })),
+    onSongSelected: React.PropTypes.func
+}
 
 module.exports = Setlist;

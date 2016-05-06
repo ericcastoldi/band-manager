@@ -10,5 +10,11 @@ var Song = React.createClass({
     );
   }
 });
+Song.propTypes = {
+  artist: React.PropTypes.string,
+  song: React.PropTypes.string.isRequired,
+  tags: React.PropTypes.arrayOf(React.PropTypes.string)
+}
+
 
 module.exports = Song;

@@ -14,3 +14,7 @@
 .setlist tr:hover td {
     background-color: rgba(30, 174, 219, 0.15);
 }
+
+.setlist tr.selected td {
+    background-color: rgba(30, 174, 219, 0.25);
+}
