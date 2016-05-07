@@ -50,36 +50,49 @@ var React = require('react');
 // });
 
 var SongFields = React.createClass({
-  
-  fieldChanged: function(change){
-    
-    var updatedProps = Object.assign({}, this.props, change);
-    console.dir(change);
 
-    this.props.editingSongChanged(updatedProps);
-  },
 
   artistChanged: function (e) {
-    console.log(e.target.value);
-    this.fieldChanged({artist: e.target.value})
+    this.fieldChanged({artist: e.target.value});
   },
 
   songChanged: function (e) {
-    console.log(e.target.value);
     this.fieldChanged({song: e.target.value})
   },
 
   tagsChanged: function (e) {
-    console.log(e.target.value);
     var tags = [];
     var renderedTags = e.target.value;
     
-    this.fieldChanged({tags: tags.concat(renderedTags.split(','))});
+    this.fieldChanged({
+      tags: tags.concat(renderedTags.split(','))
+                .map(function(tag){ 
+                  return tag.trim(); 
+                })
+      });
   },
-   render: function(){
+
+  fieldChanged: function(change){
+    
+    var updatedSong = Object.assign({}, this.props, change);
+    console.dir(change);
+
+    this.props.editingSongChanged(updatedSong);
+  },
+
+getDefaultProps: function() {
+    return {
+      artist: '', 
+      song: '', 
+      tags: []
+    }
+  },
+
+  render: function(){
+    var tags = [];
+    var renderableTags = tags.concat(this.props.tags).map(function(tag){ return tag.trim(); }).join(', ');
+
       
-      var tags = [];
-      var renderableTags = tags.concat(this.props.tags).join(', ');
       var inputs = [
         { 
           key: 'songform-artist', 

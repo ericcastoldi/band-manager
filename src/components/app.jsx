@@ -80,6 +80,19 @@ function saveSong(artist, song, tags){
 }
 
 function reducer(state, action) {
+  if(action.type == CHANGE_EDITING_SONG) {  
+    console.log('Changing the song being edited: ' + action.artist + ' - ' + action.song);
+
+    var song = {
+      artist: action.artist, 
+      song: action.song, 
+      tags: action.tags
+    };
+    return Object.assign({}, state, {
+      editingSong: song
+    });
+  }
+
 	if(action.type == SELECT_SONG) {
 		console.log(action.type + ' - ' + action.id);
 
@@ -115,8 +128,8 @@ function reducer(state, action) {
 		var song = {
 			id: songId,
 			artist: action.artist, 
-		  	song: action.song, 
-		  	tags: action.tags
+		  song: action.song, 
+		  tags: action.tags
 		}
 
 		console.dir(song);
@@ -135,14 +148,16 @@ function reducer(state, action) {
 
 			return {
 				data: newStateData,
-				selectedSong: songId
+				selectedSong: songId,
+        editingSong: song
 			};
 		}
 
 		console.log('Creating song: ' + song.artist + ' - ' + song.song);
 		return {
 			data: state.data.concat(song),
-			selectedSong: songId
+			selectedSong: songId,
+      editingSong: song
 		};
 		
 		
@@ -198,8 +213,8 @@ var Band = React.createClass({
 ReactDOM.render(
 	
 	<Provider store={store}>
-    	<Band>krushing demons</Band>
-  	</Provider>,
+   	<Band>krushing demons</Band>
+  </Provider>,
 
   	document.getElementById('content')
 
