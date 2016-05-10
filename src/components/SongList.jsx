@@ -1,7 +1,11 @@
 var React = require('react');
-var Song = require('./song.jsx');
+var Song = require('./Song.jsx');
 
-var  Setlist = React.createClass({
+var actions = require('./state/actions');
+var connect = require('react-redux').connect;
+var bindActionCreators = require('redux').bindActionCreators;
+
+var  SongList = React.createClass({
 
   rowClicked: function(id) {
     console.log('rowClicked' + id);
@@ -38,7 +42,7 @@ var  Setlist = React.createClass({
   }
 });
 
-Setlist.propTypes = {
+SongList.propTypes = {
   selectedSong: React.PropTypes.number,
   selectSong: React.PropTypes.func,
   data: React.PropTypes.arrayOf(
@@ -50,4 +54,19 @@ Setlist.propTypes = {
     })),
 }
 
-module.exports = Setlist;
+function mapSongListStateToProps(state){
+  return {
+    selectedSong: state.selectedSong,
+    data: state.data
+  } 
+}
+
+function mapSongListDispatchToProps(dispatch){
+  return bindActionCreators({
+    selectSong: actions.selectSong.creator
+  }, dispatch)
+}
+
+var SongList = connect(mapSongListStateToProps, mapSongListDispatchToProps)(SongList);
+
+module.exports = SongList;

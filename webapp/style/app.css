@@ -1,8 +1,8 @@
-#content{
+#app{
   margin: 5px 5px 5px 5px;
 }
 
-#content input{
+#app input{
    display:block; 
    width: 100%;
 }

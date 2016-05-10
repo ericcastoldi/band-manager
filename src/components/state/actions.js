@@ -1,86 +1,132 @@
-var createStore = require('redux').createStore;
+var redux = require('redux');
 
-var initialSongs = [
-    {
-        id: 1388534400000,
-        artist: "krushing demons",
-        song: "i came to chew gum and krush demons, and i'm all out of gum",
-        tags: [
-            "autoral",
-            "2010's",
-            "thrash metal"
-        ]
-    },
-    {
-        id: 1420070400000,
-        artist: "Queen",
-        song: "The show must go on",
-        tags: [
-            "cover",
-            "80's",
-            "classic rock"
-        ]
+var SELECT_SONG = 'SELECT_SONG';
+function selectSongAction(id){
+  return { type: SELECT_SONG, id: id };
+}
+function selectSongReducer(state, action){
+  console.log(action.type + ' - ' + action.id);
+
+    var editingSong = state.data.find(function(song){ 
+        return song.id == action.id; 
+    });
+
+    return {
+      data: state.data,
+      editingSong: editingSong ? editingSong : {},
+      selectedSong: action.id
     }
-  ];
+}
+var selectSong = {
+  type: SELECT_SONG,
+  creator: selectSongAction,
+  reducer: selectSongReducer
+};
 
-var initialState = {
-  selectedSong: 1388534400000,
-  songs: initialSongs
+var NEW_SONG = 'NEW_SONG';
+function newSongAction(){
+  return { type: NEW_SONG };
+}
+function newSongReducer(state, action){
+  console.log(action.type);
+
+    // returns state without 'selectedSong'
+    var newState = {
+      data: state.data,
+      editingSong: {}
+    };
+
+    return newState;
+}
+var newSong = {
+  type: NEW_SONG,
+  creator: newSongAction,
+  reducer: newSongReducer
 };
 
 
-var ADD_SONG = 'ADD_SONG';
-var SELECT_SONG = 'SELECT_SONG';
-
-function addSong(artist, song, tags) {
-  return { type: ADD_SONG, artist: artist, song: song, tags: tags };
+var CHANGE_EDITING_SONG = 'CHANGE_EDITING_SONG';
+function changeEditingSongAction(song) {
+  return { type: CHANGE_EDITING_SONG, artist: song.artist, tags:song.tags, song: song.song };
 }
+function changeEditingSongReducer(state, action){
+  console.log('Changing the song being edited: ' + action.artist + ' - ' + action.song);
 
-function selectSong(id){
- return { type: SELECT_SONG, id:id } 
+    var song = {
+      artist: action.artist, 
+      song: action.song, 
+      tags: action.tags
+    };
+    return Object.assign({}, state, {
+      editingSong: song
+    });
 }
+var changeEditingSong = {
+  type: CHANGE_EDITING_SONG,
+  creator: changeEditingSongAction,
+  reducer: changeEditingSongReducer
+};
 
 
-function setlistReducer(state, action) {
-  switch (action.type) {
-    case SELECT_SONG:
-      return Object.assign({}, state, {
-        selectedSong: action.id
-      });
-    case ADD_SONG:
-      var newSongList = state.songs.concat({
-            artist: action.artist,
-            song: action.song,
-            tags: action.tags
-          });
-
-      return Object.assign({}, state, {
-          songs: newSongList 
-      });    
-    default:
-      return state;
-  }
+var SAVE_SONG = 'SAVE_SONG';
+function saveSongAction(artist, song, tags){
+  return { 
+    type: SAVE_SONG,
+    artist: artist, 
+    song: song, 
+    tags: tags
+  };
 }
+function saveSongReducer(state, action){
+    console.log(action.type);
+    console.dir(action);
+    console.log('Selected Song: ' + state.selectedSong);
+    var songId = state.selectedSong ? state.selectedSong : Date.now();
+
+    var song = {
+      id: songId,
+      artist: action.artist, 
+      song: action.song, 
+      tags: action.tags
+    }
+
+    console.dir(song);
+
+    if(state.selectedSong)
+    {
+      var newStateData = state.data.map(function(s){
+        if(s.id == state.selectedSong)
+        {
+          console.log('Updating song: ' + s.artist + ' - ' + s.song);
+          return song;
+        }
+
+        return s;
+      }); 
+
+      return {
+        data: newStateData,
+        selectedSong: songId,
+        editingSong: song
+      };
+    }
+
+    console.log('Creating song: ' + song.artist + ' - ' + song.song);
+    return {
+      data: state.data.concat(song),
+      selectedSong: songId,
+      editingSong: song
+    };
+}
+var saveSong = {
+  type: SAVE_SONG,
+  creator: saveSongAction,
+  reducer: saveSongReducer
+};
 
 module.exports = {
-  store: createStore(setlistReducer, initialState),
-  actions: {
-    addSong: addSong,
-    selectSong: selectSong,
-  }
+  newSong: newSong,
+  saveSong: saveSong,
+  selectSong: selectSong,
+  changeEditingSong: changeEditingSong
 };
-// console.log(store.getState());
-
-// // Every time the state changes, log it
-// // Note that subscribe() returns a function for unregistering the listener
-// var unsubscribe = store.subscribe(function() {
-//   console.log(store.getState());
-// });
-
-// // Dispatch some actions
-// store.dispatch(addSong('Muse', 'Uprising', ['indie', 'alternative']));
-// store.dispatch(addSong('Nightwish', 'The Phantom of the Opera', ['gothic', 'metal']));
-// store.dispatch(selectSong(1420070400000));
-
-// // Stop listening to state updates
-// unsubscribe();
