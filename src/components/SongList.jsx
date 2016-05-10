@@ -15,7 +15,7 @@ var  SongList = React.createClass({
   render : function(){
     var self = this;
     var songs = this.props.data.map(function (song) {
-      var cssClass = self.props.selectedSong == song.id ? 'selected' : '';
+      var cssClass = self.props.selectedSong === song.id ? 'selected' : '';
 
       return (
         <tr key={song.id} className={cssClass} onClick={self.rowClicked.bind(self, song.id)}>
@@ -51,7 +51,7 @@ SongList.propTypes = {
       artist: React.PropTypes.string,
       song: React.PropTypes.string,
       tags: React.PropTypes.array
-    })),
+    }))
 }
 
 function mapSongListStateToProps(state){
@@ -67,6 +67,4 @@ function mapSongListDispatchToProps(dispatch){
   }, dispatch)
 }
 
-var SongList = connect(mapSongListStateToProps, mapSongListDispatchToProps)(SongList);
-
-module.exports = SongList;
+module.exports = connect(mapSongListStateToProps, mapSongListDispatchToProps)(SongList);

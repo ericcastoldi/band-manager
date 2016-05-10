@@ -54,6 +54,4 @@ function mapSongFormDispatchToProps(dispatch) {
   }, dispatch)
 }
 
-var SongForm = connect(mapSongFormStateToProps, mapSongFormDispatchToProps)(SongForm);
-
-module.exports = SongForm;
+module.exports = connect(mapSongFormStateToProps, mapSongFormDispatchToProps)(SongForm);

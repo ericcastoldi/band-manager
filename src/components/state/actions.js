@@ -8,7 +8,7 @@ function selectSongReducer(state, action){
   console.log(action.type + ' - ' + action.id);
 
     var editingSong = state.data.find(function(song){ 
-        return song.id == action.id; 
+        return song.id === action.id; 
     });
 
     return {
@@ -95,7 +95,7 @@ function saveSongReducer(state, action){
     if(state.selectedSong)
     {
       var newStateData = state.data.map(function(s){
-        if(s.id == state.selectedSong)
+        if(s.id === state.selectedSong)
         {
           console.log('Updating song: ' + s.artist + ' - ' + s.song);
           return song;
