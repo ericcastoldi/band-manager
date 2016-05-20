@@ -39,10 +39,10 @@ var SongForm = React.createClass({
 SongForm.propTypes = {
   artist: React.PropTypes.string,
   song: React.PropTypes.string,
-  tags: React.PropTypes.arrayOf(React.PropTypes.string)
+  tags: React.PropTypes.arrayOf(React.PropTypes.string),
   newSong: React.PropTypes.func.isRequired,
   saveSong: React.PropTypes.func.isRequired,
-  changeEditingSong: React.PropTypes.func.isRequired,
+  changeEditingSong: React.PropTypes.func.isRequired
 }
 
 function mapSongFormStateToProps(state) {
