@@ -87,6 +87,13 @@ var SongFields = React.createClass({
 
 });
 
+SongFields.propTypes = {
+  artist: React.PropTypes.string,
+  song: React.PropTypes.string,
+  tags: React.PropTypes.arrayOf(React.PropTypes.string)
+  editingSongChanged: React.PropTypes.func.isRequired,
+}
+
 module.exports = SongFields;
 
 
