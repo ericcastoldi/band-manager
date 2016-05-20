@@ -21,7 +21,12 @@ var SongForm = React.createClass({
       return (
         <form className="songform" onSubmit={this.saveSong}>
           
-          <SongFields artist={this.props.artist} song={this.props.song} tags={this.props.tags} editingSongChanged={this.props.changeEditingSong} />
+          <SongFields 
+              artist={this.props.artist} 
+              song={this.props.song} 
+              tags={this.props.tags} 
+              editingSongChanged={this.props.changeEditingSong} 
+          />
 
           <input type="button" onClick={this.addNewSong} value="Novo" className="button" />
           <input type="submit" value="Salvar" className="button-primary" />

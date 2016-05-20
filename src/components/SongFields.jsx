@@ -28,7 +28,7 @@ var SongFields = React.createClass({
     var updatedSong = Object.assign({}, this.props, change);
     console.dir(change);
 
-    this.props.editingSongChanged(updatedSong);
+    this.props.editingSongChanged(updatedSong.artist, updatedSong.song, updatedSong.tags);
   },
 
 getDefaultProps: function() {
