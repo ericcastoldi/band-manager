@@ -19,6 +19,9 @@ var actionCreator = function(type, argNames){
 
 var safeReducer = function(type, reducer){
   return function(state, action){
+
+      console.log(action);
+
       if(reducer && action.type === type){
           var change = Object.assign({}, reducer(state, action));
           return Object.assign({}, state, change);
@@ -30,7 +33,7 @@ var safeReducer = function(type, reducer){
 
 
 
-var actionFactory =  {
+module.exports  =  {
   
   cleanAction: function(type, reducer){
     return {
@@ -45,6 +48,14 @@ var actionFactory =  {
       return {
           type: type,
           creator: actionCreator(type, argNames),
+          reducer: safeReducer(type, reducer)
+      };
+  },
+
+  complexAction: function(type, creator, reducer){
+    return {
+          type: type,
+          creator: creator,
           reducer: safeReducer(type, reducer)
       };
   },
@@ -69,8 +80,8 @@ var actionFactory =  {
   }
 };
 
-module.exports = {
-  action: actionFactory.action,
-  cleanAction: actionFactory.cleanAction,
-  rootReducer: actionFactory.rootReducer
-};
+// module.exports = {
+//   action: actionFactory.action,
+//   cleanAction: actionFactory.cleanAction,
+//   rootReducer: actionFactory.rootReducer
+// };

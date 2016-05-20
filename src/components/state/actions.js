@@ -1,16 +1,15 @@
 var redux = require('redux');
 var SongFactory = require('../../api/model/song');
 var actionFactory = require('./actionFactory');
+var axios = require('axios');
 
-module.exports = {
+var actions = {
   
   // cleans the selectedSong and the editingSong
   newSong: actionFactory.cleanAction(
     
     'NEW_SONG',  
     function(state, action){
-      console.log(action.type);
-
       return {
         editingSong: {},
         selectedSong: undefined
@@ -25,7 +24,6 @@ module.exports = {
     'SAVE_SONG', ['artist', 'song', 'tags'],
     function(state, action){
 
-      console.log(action.type);
       console.log('Selected Song: ' + state.selectedSong);
 
       var songId = state.selectedSong ? state.selectedSong : Date.now();
@@ -69,7 +67,6 @@ module.exports = {
 
     'SELECT_SONG', ['id'], 
     function(state, action){
-      console.log(action.type + ' - ' + action.id);
 
       var editingSong = state.data.find(function(song){ 
           return song.id === action.id; 
@@ -87,10 +84,76 @@ module.exports = {
   
     'CHANGE_EDITING_SONG', ['artist', 'song', 'tags'],
     function (state, action){
-      
-      console.log('Changing the song being edited: ' + action.artist + ' - ' + action.song);
-
       return { editingSong: SongFactory.fromSongish(action) };
+    }
+  ),
+
+  
+
+  requestSongs: actionFactory.cleanAction(
+    'REQUEST_SONGS',
+    function(state, action){
+      return {
+        fetchingSongs: true
+      };
+    }
+  ),
+
+  receiveSongs: actionFactory.action(
+    'RECEIVE_SONGS', ['response'],
+    function(state, action){
+      return {
+        data: action.response,
+        fetchingSongs: false
+      };
+    }
+  ),
+
+  cannotReceiveSongs: actionFactory.action(
+    'CANNOT_RECEIVE_SONGS', ['error'],
+    function(state, action){
+      return {
+        errorFetchingSongs: true,
+        fetchingSongs: false
+      };
     }
   )
 };
+
+// async
+var fetchSongs = actionFactory.complexAction(
+
+  'FETCH_SONGS',
+  
+  // action creator
+  function(){
+    
+    // async
+    return function(dispatch){
+      //dispatch(actions.requestSongs.creator());
+
+      return axios.get('http://localhost:3000/api/setlist')
+        .then(function(response){
+          console.log(response);
+          console.log(response.data); // ex.: { user: 'Your User'}
+          console.log(response.status); // ex.: 200
+
+          //dispatch(actions.receiveSongs.creator(response.data));
+        })
+        .catch(function (response) {
+          console.log(response);
+          //dispatch(actions.cannotReceiveSongs.creator());
+        });  
+      
+
+    }
+  },
+  
+  // reducer
+  function(state, action){
+    return state;
+  }
+
+);
+
+module.exports = actions;

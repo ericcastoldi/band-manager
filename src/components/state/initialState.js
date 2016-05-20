@@ -1,7 +1,4 @@
-var initialState = {
-  editingSong: {},
-  selectedSong: undefined,
-  data: [
+var songs = [
       {
           id: 1388534400000,
           artist: "krushing demons",
@@ -42,7 +39,25 @@ var initialState = {
               "nu-metal"
           ]
       }
-    ]
+    ];
+
+var initialState = {
+
+  // The song object being edited in the SongForm
+  editingSong: {},
+
+  // The SongList's selected song id
+  selectedSong: undefined,
+
+  // Are we fetching some songs right now?
+  fetchingSongs: false,
+
+  // Do we had any errors fetching the songs?
+  errorFetchingSongs: false,
+
+  // All the songs!!!
+  data: [ songs[0], songs[1] ]
+
 };
 
 

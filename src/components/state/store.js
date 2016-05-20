@@ -1,6 +1,21 @@
+var thunkMiddleware = require('redux-thunk').default;
+var createLogger =  require('redux-logger');
+
 var initialState = require('./initialState');
-var createStore = require('redux').createStore;
+var redux = require('redux');
 var actionFactory = require('./actionFactory');
 var rootReducer = actionFactory.rootReducer(require('./actions'));
 
-module.exports = createStore(rootReducer, initialState);
+var loggerMiddleware = createLogger();
+
+module.exports = redux.createStore(
+
+	rootReducer, 
+
+	initialState,
+
+	redux.applyMiddleware(
+	    thunkMiddleware,
+    	loggerMiddleware
+ 	)
+);
