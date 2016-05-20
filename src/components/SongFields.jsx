@@ -31,7 +31,7 @@ var SongFields = React.createClass({
     this.props.editingSongChanged(updatedSong.artist, updatedSong.song, updatedSong.tags);
   },
 
-getDefaultProps: function() {
+  getDefaultProps: function() {
     return {
       artist: '', 
       song: '', 

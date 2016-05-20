@@ -42,7 +42,6 @@ SongForm.propTypes = {
   tags: React.PropTypes.arrayOf(React.PropTypes.string)
   //onNewSongAdded: React.PropTypes.func
 }
-
 function mapSongFormStateToProps(state) {
     return {
       artist: state.editingSong.artist,

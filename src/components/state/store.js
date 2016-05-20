@@ -1,6 +1,5 @@
-var createStore = require('redux').createStore;
-var rootReducer = require('./rootReducer');
 var initialState = require('./initialState');
+var createStore = require('redux').createStore;
+var rootReducer = require('./actionFactory').rootReducer(require('./actions'));
 
-var store = createStore(rootReducer, initialState);
-module.exports = store;
+module.exports = createStore(rootReducer, initialState);
