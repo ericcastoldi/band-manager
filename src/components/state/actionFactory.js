@@ -20,7 +20,7 @@ var actionCreator = function(type, argNames){
 var safeReducer = function(type, reducer){
   return function(state, action){
       if(reducer && action.type === type){
-          var change = reducer(state, action);
+          var change = Object.assign({}, reducer(state, action));
           return Object.assign({}, state, change);
       }
 
@@ -56,7 +56,7 @@ var actionFactory =  {
         state = initialState;
       }
 
-      var newState = undefined;
+      var newState;
 
       Object.keys(actions).forEach(function(actionKey){
         if(action.type === actions[actionKey].type){

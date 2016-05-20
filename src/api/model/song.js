@@ -16,7 +16,7 @@ var fromSongishAndId = function(id, songish) {
 }
 
 var fromSongish = function(songish){
-  var song = empty;
+  var song = Object.assign({}, empty);
   
   if(!songish){
     return song;

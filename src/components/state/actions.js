@@ -10,6 +10,7 @@ module.exports = {
     'NEW_SONG',  
     function(state, action){
       console.log(action.type);
+
       return {
         editingSong: {},
         selectedSong: undefined
