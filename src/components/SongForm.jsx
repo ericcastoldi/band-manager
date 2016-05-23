@@ -6,14 +6,22 @@ var connect = require('react-redux').connect;
 var bindActionCreators = require('redux').bindActionCreators;
 
 var SongForm = React.createClass({
-  
 
   addNewSong: function(){
     this.props.newSong();
   },
+
   saveSong: function(e){
+
     e.preventDefault();
-    this.props.saveSong(this.props.artist, this.props.song, this.props.tags);
+    
+    this.props.saveSong(
+      this.props.artist, 
+      this.props.song, 
+      this.props.tags,
+      this.props.id
+    );
+
   },
   
   render: function(){
@@ -22,14 +30,16 @@ var SongForm = React.createClass({
         <form className="songform" onSubmit={this.saveSong}>
           
           <SongFields 
+              disabled={this.props.savingSong}
               artist={this.props.artist} 
               song={this.props.song} 
               tags={this.props.tags} 
+              id={this.props.id} 
               editingSongChanged={this.props.changeEditingSong} 
           />
 
-          <input type="button" onClick={this.addNewSong} value="Novo" className="button" />
-          <input type="submit" value="Salvar" className="button-primary" />
+          <input disabled={this.props.savingSong} type="button" onClick={this.addNewSong} value="Novo" className="button" />
+          <input disabled={this.props.savingSong} type="submit" value="Salvar" className="button-primary" />
 
         </form>
       );
@@ -37,19 +47,24 @@ var SongForm = React.createClass({
 });
 
 SongForm.propTypes = {
+
+  id: React.PropTypes.number,
   artist: React.PropTypes.string,
   song: React.PropTypes.string,
   tags: React.PropTypes.arrayOf(React.PropTypes.string),
   newSong: React.PropTypes.func.isRequired,
   saveSong: React.PropTypes.func.isRequired,
+  savingSong: React.PropTypes.bool,
   changeEditingSong: React.PropTypes.func.isRequired
-}
+};
 
 function mapSongFormStateToProps(state) {
     return {
       artist: state.editingSong.artist,
       song: state.editingSong.song,
-      tags: state.editingSong.tags
+      tags: state.editingSong.tags,
+      id: state.editingSong.id,
+      savingSong: state.savingSong
     }
 }
 

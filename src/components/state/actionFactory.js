@@ -79,9 +79,3 @@ module.exports  =  {
     };
   }
 };
-
-// module.exports = {
-//   action: actionFactory.action,
-//   cleanAction: actionFactory.cleanAction,
-//   rootReducer: actionFactory.rootReducer
-// };

@@ -11,10 +11,18 @@
 	display:block; 
 }
 
-.setlist tr:hover td {
+.songlist tr:hover td {
     background-color: rgba(30, 174, 219, 0.15);
 }
 
-.setlist tr.selected td {
+.songlist tr.selected td {
     background-color: rgba(30, 174, 219, 0.25);
+}
+
+h6.songlist {
+	margin: 25px 35px 25px 25px;	
+}
+
+h6.error{
+	color: #DC283F;
 }

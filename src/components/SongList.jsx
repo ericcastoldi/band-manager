@@ -7,18 +7,30 @@ var bindActionCreators = require('redux').bindActionCreators;
 
 var  SongList = React.createClass({
 
+  componentDidMount: function() {
+    this.props.fetchSongs();
+  },
+
   rowClicked: function(id) {
     console.log('rowClicked' + id);
     this.props.selectSong(id);
   },
 
-  render : function(){
+  renderRows: function(){
     var self = this;
-    var songs = this.props.data.map(function (song) {
-      var cssClass = self.props.selectedSong === song.id ? 'selected' : '';
+    var data = this.props.data;
+    var selectedSong = this.props.selectedSong;
+
+    var songs = data.map(function (song) {
+    
+      var cssClass = selectedSong === song.id ? 
+        'selected' : 
+        '';
 
       return (
-        <tr key={song.id} className={cssClass} onClick={self.rowClicked.bind(self, song.id)}>
+        <tr key={song.id} 
+            className={cssClass} 
+            onClick={self.rowClicked.bind(self, song.id)}>
           <td>
             <Song artist={song.artist} song={song.song} tags={song.tags} />
           </td>
@@ -27,22 +39,65 @@ var  SongList = React.createClass({
 
     });
 
+    return songs;
+  },
+
+  renderNoData: function(){
+    var messageCssClass = 'songlist';
+    var noDataMessage = 'Sem músicas a exibir.'; 
+    var fetchingMessage = 'Buscando músicas...';
+    var errorMessage = 'Tivemos um problema ao buscar as músicas :(';
+
+    var message = this.props.fetchingSongs ? 
+      fetchingMessage : 
+      noDataMessage;
+
+
+    if(this.props.errorFetchingSongs){
+      message = errorMessage;
+      messageCssClass += ' error'
+    }
+
     return (
-      <table className="u-full-width setlist">
+      <h6 className={messageCssClass}>{ message }</h6>
+    );
+  },
+
+  renderTable: function(){
+    var rows = this.renderRows();
+    return (
+      <table className="u-full-width songlist">
         <thead>
           <tr>
             <th>Músicas</th>
           </tr>
         </thead>
         <tbody>
-          { songs }
+          { rows }
         </tbody>
       </table>
-      );
+    );
+  },
+
+  render : function(){
+    var noData = !this.props.data 
+                || this.props.data.length === 0;
+
+    if(noData 
+      || this.props.fetchingSongs
+      || this.props.errorFetchingSongs){
+
+      return this.renderNoData();
+    
+    }
+
+    return this.renderTable();
   }
 });
 
 SongList.propTypes = {
+  fetchingSongs: React.PropTypes.bool,
+  errorFetchingSongs: React.PropTypes.bool,
   selectedSong: React.PropTypes.number,
   selectSong: React.PropTypes.func,
   data: React.PropTypes.arrayOf(
@@ -51,11 +106,14 @@ SongList.propTypes = {
       artist: React.PropTypes.string,
       song: React.PropTypes.string,
       tags: React.PropTypes.array
-    }))
+    })),
+  fetchSongs: React.PropTypes.func.isRequired
 }
 
 function mapSongListStateToProps(state){
   return {
+    fetchingSongs: state.fetchingSongs,
+    errorFetchingSongs: state.errorFetchingSongs,
     selectedSong: state.selectedSong,
     data: state.data
   } 
@@ -63,6 +121,7 @@ function mapSongListStateToProps(state){
 
 function mapSongListDispatchToProps(dispatch){
   return bindActionCreators({
+    fetchSongs: actions.fetchSongs.creator,
     selectSong: actions.selectSong.creator
   }, dispatch)
 }

@@ -28,14 +28,20 @@ var SongFields = React.createClass({
     var updatedSong = Object.assign({}, this.props, change);
     console.dir(change);
 
-    this.props.editingSongChanged(updatedSong.artist, updatedSong.song, updatedSong.tags);
+    this.props.editingSongChanged(
+      updatedSong.artist, 
+      updatedSong.song, 
+      updatedSong.tags,
+      updatedSong.id
+    );
   },
 
   getDefaultProps: function() {
     return {
       artist: '', 
       song: '', 
-      tags: []
+      tags: [],
+      id: undefined
     }
   },
 
@@ -49,7 +55,7 @@ var SongFields = React.createClass({
           key: 'songform-artist', 
           placeholder: 'Artista', 
           value:this.props.artist, 
-          changed: this.artistChanged 
+          changed: this.artistChanged
         },
         { 
           key: 'songform-song', 
@@ -65,6 +71,7 @@ var SongFields = React.createClass({
         }
       ];
 
+      var disableFields = this.props.disabled;
       var renderedInputs = inputs.map(function (input) {
         
         return (
@@ -73,7 +80,8 @@ var SongFields = React.createClass({
                   value={input.value}
                   key={input.key}
                   onChange={input.changed}
-                  />
+                  disabled={disableFields}
+          />
         );
 
       });
@@ -88,6 +96,8 @@ var SongFields = React.createClass({
 });
 
 SongFields.propTypes = {
+  disabled: React.PropTypes.bool,
+  id: React.PropTypes.number,
   artist: React.PropTypes.string,
   song: React.PropTypes.string,
   tags: React.PropTypes.arrayOf(React.PropTypes.string),

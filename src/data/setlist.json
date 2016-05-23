@@ -11,7 +11,7 @@
     },
     {
         "id": 1420070400000,
-        "artist": "Queen",
+        "artist": "Queen memo",
         "song": "The show must go on",
         "tags": [
             "cover",
@@ -63,11 +63,12 @@
         ]
     },
     {
-        "id": 1462503183345,
-        "artist": "asadf",
-        "song": "asdf",
+        "id": 1464012735751,
+        "artist": "Novos Baianos",
+        "song": "Acabou Chorare",
         "tags": [
-            "asdf"
+            "tropicalia",
+            "brasil"
         ]
     }
 ]
