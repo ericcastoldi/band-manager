@@ -18,50 +18,6 @@ var actions = {
 
   ),
 
-  // creates a new song or updates an existing one
-  // saveSong: actionFactory.action(
-
-  //   'SAVE_SONG', ['artist', 'song', 'tags'],
-  //   function(state, action){
-
-  //     console.log('Selected Song: ' + state.selectedSong);
-
-  //     var songId = state.selectedSong ? state.selectedSong : Date.now();
-  //     var song = SongFactory.fromSongishAndId(songId, action);
-
-  //     console.dir(song);
-
-  //     if(state.selectedSong)
-  //     {
-  //       var newStateData = state.data.map(function(s){
-  //         if(s.id === state.selectedSong)
-  //         {
-  //           console.log('Updating song: ' + s.artist + ' - ' + s.song);
-  //           return song;
-  //         }
-
-  //         return s;
-  //       }); 
-
-  //       return {
-  //         data: newStateData,
-  //         selectedSong: song.id,
-  //         editingSong: song
-  //       };
-  //     }
-
-  //     console.log('Creating song: ' + song.artist + ' - ' + song.song);
-      
-  //     return {
-  //       data: state.data.concat(song),
-  //       selectedSong: songId,
-  //       editingSong: song
-  //     };
-  //   }
-
-  // ),
-
-
   // given an id, it gets the corresponding song in state.data
   selectSong: actionFactory.action(
 
@@ -185,6 +141,7 @@ actions.fetchSongs = actionFactory.complexAction(
 
 );
 
+// creates a new song or updates an existing one
 actions.saveSong = actionFactory.complexAction(
 
   'SAVE_SONG', 
