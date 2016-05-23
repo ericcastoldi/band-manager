@@ -41,7 +41,7 @@ function Repository(jsonFilePath){
 
 	this.find = function(where, found, notFound){
 		this.all(function(data){
-			
+
 			var obj = data.find(where);
 			if (obj) {
 				found(obj, data);

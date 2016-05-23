@@ -56,7 +56,7 @@ gulp.task('init-istanbul', function () {
 
 gulp.task('browserify', function() {
   return browserify({
-      entries: 'src/components/app.jsx',
+      entries: 'src/components/App.jsx',
       debug: true,
       transform: [reactify]
     })

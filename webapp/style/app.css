@@ -1,8 +1,8 @@
-#content{
+#app{
   margin: 5px 5px 5px 5px;
 }
 
-#content input{
+#app input{
    display:block; 
    width: 100%;
 }
@@ -11,6 +11,18 @@
 	display:block; 
 }
 
-.setlist tr:hover td {
+.songlist tr:hover td {
     background-color: rgba(30, 174, 219, 0.15);
+}
+
+.songlist tr.selected td {
+    background-color: rgba(30, 174, 219, 0.25);
+}
+
+h6.songlist {
+	margin: 25px 35px 25px 25px;	
+}
+
+h6.error{
+	color: #DC283F;
 }
