@@ -23,5 +23,4 @@ var initialState = {
 
 };
 
-
 module.exports = initialState;
