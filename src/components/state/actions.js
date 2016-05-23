@@ -174,4 +174,5 @@ actions.saveSong = actionFactory.complexAction(
     return state;
   }
 );
+
 module.exports = actions;
