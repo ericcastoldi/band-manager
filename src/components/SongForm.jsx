@@ -17,7 +17,7 @@ var SongForm = React.createClass({
     
     this.props.saveSong(
       this.props.artist, 
-      this.props.song, 
+      this.props.name, 
       this.props.tags,
       this.props.id
     );
@@ -32,7 +32,7 @@ var SongForm = React.createClass({
           <SongFields 
               disabled={this.props.savingSong}
               artist={this.props.artist} 
-              song={this.props.song} 
+              name={this.props.name} 
               tags={this.props.tags} 
               id={this.props.id} 
               editingSongChanged={this.props.changeEditingSong} 
@@ -50,7 +50,7 @@ SongForm.propTypes = {
 
   id: React.PropTypes.number,
   artist: React.PropTypes.string,
-  song: React.PropTypes.string,
+  name: React.PropTypes.string,
   tags: React.PropTypes.arrayOf(React.PropTypes.string),
   newSong: React.PropTypes.func.isRequired,
   saveSong: React.PropTypes.func.isRequired,
@@ -61,7 +61,7 @@ SongForm.propTypes = {
 function mapSongFormStateToProps(state) {
     return {
       artist: state.editingSong.artist,
-      song: state.editingSong.song,
+      name: state.editingSong.name,
       tags: state.editingSong.tags,
       id: state.editingSong.id,
       savingSong: state.savingSong

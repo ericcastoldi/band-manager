@@ -68,7 +68,7 @@ describe('Setlist', function(){
 		before('create setlist and call method', function(){
 			this.setlist = new Setlist();
 
-			this.song = { id: 123, artist: 'An Artist', song: 'The Song', tags: ['tag', 'hash'] };
+			this.song = { id: 123, artist: 'An Artist', name: 'The Song', tags: ['tag', 'hash'] };
 			this.req = { body: this.song };
 			this.resSpy = { json: sinon.spy() };
 			
@@ -82,7 +82,7 @@ describe('Setlist', function(){
 
 			expect(song.id).to.equal(123);
 			expect(song.artist).to.equal('An Artist');
-			expect(song.song).to.equal('The Song');
+			expect(song.name).to.equal('The Song');
 			expect(song.tags[0]).to.equal('tag');
 			expect(song.tags[1]).to.equal('hash');
 		});
@@ -97,7 +97,7 @@ describe('Setlist', function(){
 			var req = { body: song };
 			var resSpy = { json: sinon.spy() };
 			
-			expect(this.setlist.save.bind(this.setlist, req, resSpy)).to.throw(Error, /Body must have a song./);
+			expect(this.setlist.save.bind(this.setlist, req, resSpy)).to.throw(Error, /Song must have a name./);
 		});
 	});
 
@@ -106,7 +106,7 @@ describe('Setlist', function(){
 		before('create setlist and call method', function(){
 			this.setlist = new Setlist();
 
-			this.song = { id: 123, artist: 'An Artist', song: 'The Song', tags: ['tag', 'hash'] };
+			this.song = { id: 123, artist: 'An Artist', name: 'The Song', tags: ['tag', 'hash'] };
 			this.req = { body: this.song };
 			this.resSpy = { json: sinon.spy() };
 			
@@ -120,7 +120,7 @@ describe('Setlist', function(){
 
 			expect(song.id).to.equal(123);
 			expect(song.artist).to.equal('An Artist');
-			expect(song.song).to.equal('The Song');
+			expect(song.name).to.equal('The Song');
 			expect(song.tags[0]).to.equal('tag');
 			expect(song.tags[1]).to.equal('hash');
 
@@ -133,12 +133,12 @@ describe('Setlist', function(){
 			expect(this.resSpy.json.calledWithExactly(data)).to.be.true;
 		});
 
-		it('should throw an Error if req.body.song is undefined.', function(){
+		it('should throw an Error if req.body.name is undefined.', function(){
 			var song = { otherStuff: true };
 			var req = { body: song };
 			var resSpy = { json: sinon.spy() };
 			
-			expect(this.setlist.update.bind(this.setlist, req, resSpy)).to.throw(Error, /Body must have a song./);
+			expect(this.setlist.update.bind(this.setlist, req, resSpy)).to.throw(Error, /Song must have a name./);
 		});
 	});
 

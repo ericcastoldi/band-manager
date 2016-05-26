@@ -32,7 +32,7 @@ var  SongList = React.createClass({
             className={cssClass} 
             onClick={self.rowClicked.bind(self, song.id)}>
           <td>
-            <Song artist={song.artist} song={song.song} tags={song.tags} />
+            <Song artist={song.artist} name={song.name} tags={song.tags} />
           </td>
         </tr>
       );
@@ -104,7 +104,7 @@ SongList.propTypes = {
     React.PropTypes.shape({
       id: React.PropTypes.number,
       artist: React.PropTypes.string,
-      song: React.PropTypes.string,
+      name: React.PropTypes.string,
       tags: React.PropTypes.array
     })),
   fetchSongs: React.PropTypes.func.isRequired

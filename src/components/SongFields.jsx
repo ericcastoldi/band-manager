@@ -7,8 +7,8 @@ var SongFields = React.createClass({
     this.fieldChanged({artist: e.target.value});
   },
 
-  songChanged: function (e) {
-    this.fieldChanged({song: e.target.value})
+  nameChanged: function (e) {
+    this.fieldChanged({name: e.target.value})
   },
 
   tagsChanged: function (e) {
@@ -26,11 +26,12 @@ var SongFields = React.createClass({
   fieldChanged: function(change){
     
     var updatedSong = Object.assign({}, this.props, change);
+    
     console.dir(change);
 
     this.props.editingSongChanged(
       updatedSong.artist, 
-      updatedSong.song, 
+      updatedSong.name, 
       updatedSong.tags,
       updatedSong.id
     );
@@ -39,7 +40,7 @@ var SongFields = React.createClass({
   getDefaultProps: function() {
     return {
       artist: '', 
-      song: '', 
+      name: '', 
       tags: [],
       id: undefined
     }
@@ -58,10 +59,10 @@ var SongFields = React.createClass({
           changed: this.artistChanged
         },
         { 
-          key: 'songform-song', 
+          key: 'songform-name', 
           placeholder: 'Música', 
-          value:this.props.song, 
-          changed: this.songChanged 
+          value:this.props.name, 
+          changed: this.nameChanged 
         },
         { 
           key: 'songform-tags', 
@@ -99,7 +100,7 @@ SongFields.propTypes = {
   disabled: React.PropTypes.bool,
   id: React.PropTypes.number,
   artist: React.PropTypes.string,
-  song: React.PropTypes.string,
+  name: React.PropTypes.string,
   tags: React.PropTypes.arrayOf(React.PropTypes.string),
   editingSongChanged: React.PropTypes.func.isRequired
 }

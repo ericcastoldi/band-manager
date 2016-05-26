@@ -2,7 +2,7 @@
     {
         "id": 1388534400000,
         "artist": "krushing demons",
-        "song": "i came to chew gum and krush demons, and i'm all out of gum",
+        "name": "i came to chew gum and krush demons, and i'm all out of gum",
         "tags": [
             "autoral",
             "2010's",
@@ -12,7 +12,7 @@
     {
         "id": 1420070400000,
         "artist": "Queen",
-        "song": "The show must go on",
+        "name": "The show must go on",
         "tags": [
             "cover",
             "80's",
@@ -22,7 +22,7 @@
     {
         "id": 1458882345512,
         "artist": "Gorillaz",
-        "song": "Clint Eastwood",
+        "name": "Clint Eastwood",
         "tags": [
             "cover",
             "2000's",
@@ -32,7 +32,7 @@
     {
         "id": 1458882373879,
         "artist": "Linkin Park",
-        "song": "Numb",
+        "name": "Numb",
         "tags": [
             "cover",
             "2000's",
@@ -42,7 +42,7 @@
     {
         "id": 1460745921061,
         "artist": "Guns n' Roses",
-        "song": "Sweet Child O' Mine",
+        "name": "Sweet Child O' Mine",
         "tags": [
             "80's",
             "Hard Rock",
@@ -53,7 +53,7 @@
     {
         "id": 1460756725051,
         "artist": "Oasis",
-        "song": "Don't Go Away",
+        "name": "Don't Go Away",
         "tags": [
             "indie",
             "sad",
@@ -65,7 +65,7 @@
     {
         "id": 1464012735751,
         "artist": "Novos Baianos",
-        "song": "Acabou Chorare",
+        "name": "Acabou Chorare",
         "tags": [
             "tropicalia",
             "brasil"

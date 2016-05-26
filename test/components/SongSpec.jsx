@@ -6,10 +6,10 @@ var ReactTestUtils = require('react-addons-test-utils');
 describe('Song component', function(){
 
   before('render and locate element', function() {
-    var Song = require('../../src/components/song.jsx');
-    
+    var Song = require('../../src/components/Song.jsx');
+    var tags = ['reggae', 'power'];
     var songComponentElementTree = ReactTestUtils.renderIntoDocument(
-      <Song artist="The Artist" song="Singin' Songs About The Future" tags="reggae, power" />
+      <Song artist="The Artist" name="Singin' Songs About The Future" tags={tags} />
     );
 
     this.songDivElement = ReactTestUtils.findRenderedDOMComponentWithTag(songComponentElementTree, 'div');
