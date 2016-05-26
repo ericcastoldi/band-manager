@@ -1,4 +1,5 @@
 var Repository = require('./repository');
+var songFactory = require('./model/song');
 
 function Setlist(){
   
@@ -15,7 +16,7 @@ function Setlist(){
 
   this.save = function(req, res) {
 
-    var song = createSong(req.body);
+    var song = songFactory.fromSongish(req.body);
 
    	setlistRepo.add(song, function(data){
       res.json(data);
@@ -23,26 +24,11 @@ function Setlist(){
   }
 
   this.update = function(req, res) {
-
-    var where = function(song){
-      return song.id === req.body.id;
-    }
-
-    setlistRepo.update(createSong(req.body), where, function(data){
+    setlistRepo.update(
+      songFactory.fromSongish(req.body), 
+      songFactory.createQueryById(req.body.id), function(data){
       res.json(data);
     });
-  }
-
-  var createSong = function (body){
-    
-    if(!body.song) throw new Error('Body must have a song.')
-
-    return {
-        id: body.id ? body.id : Date.now(),
-        artist: body.artist,
-        song: body.song,
-        tags: body.tags
-    };
   }
 }
 

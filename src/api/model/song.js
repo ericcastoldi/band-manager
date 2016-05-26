@@ -1,64 +1,63 @@
-var empty = {
+var emptySong = {
 	id:undefined, 
 	artist:undefined, 
-	song:undefined, 
+	name:undefined, 
 	tags: []
 };
 
-var fromSongishAndId = function(id, songish) {
-  var song = fromSongish(songish);
+var empty = function(){
+  return Object.assign({}, emptySong);
+};
 
-  if(id) {
-    song.id = id;
-  }
+var createSong = function(artist, name, tags, id){
 
-  return song;
-}
+  if(!name) throw new Error('Song must have a name.');
 
-var fromSongish = function(songish){
-  var song = Object.assign({}, empty);
-  
-  if(!songish){
-    return song;
-  }
-
-  if(songish.id){
-    song.id = songish.id;
-  }
-
-  if(songish.artist){
-    song.artist = songish.artist;
-  }
-
-  if(songish.song){
-    song.song = songish.song;
-  }
-
-  if(songish.tags){
-    song.tags = songish.tags;
-  }
-
-  return song;
-}
-
-var createSong = function(artist, songName, tags, id){
   var song = {
-    artist: artist,
-    song:songName,
-    tags: tags
+    name:name
   };
 
   if(id){
     song.id = id;
   }
 
-  return song;
+  if(artist){
+    song.artist = artist;
+  }
+
+  if(tags){
+    song.tags = tags;
+  }
+
+  return Object.assign({}, song);
 }
 
+
+var fromSongishAndId = function(id, songish) {
+  if(!songish) throw new Error('There\'s no songish.');
+  var song = Object.assign({}, songish);
+  return createSong(song.artist, song.name, song.tags, id);
+}
+
+var fromSongish = function(songish){
+  if(!songish) throw new Error('There\'s no songish.');
+  var song = Object.assign({}, songish);
+  var id = song.id ? song.id : Date.now();
+  return createSong(song.artist, song.name, song.tags, id);
+}
+
+var queryById = function(id) {
+  var where = function(song){
+    return song.id === id;
+  };
+
+  return where;
+}
 
 module.exports = {
 	empty: empty,
 	createSong : createSong,
 	fromSongish : fromSongish,
-	fromSongishAndId: fromSongishAndId
+	fromSongishAndId: fromSongishAndId,
+  createQueryById: queryById
 };

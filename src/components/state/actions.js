@@ -1,5 +1,5 @@
 var redux = require('redux');
-var SongFactory = require('../../api/model/song');
+var songFactory = require('../../api/model/song');
 var actionFactory = require('./actionFactory');
 var axios = require('axios');
 
@@ -24,9 +24,7 @@ var actions = {
     'SELECT_SONG', ['id'], 
     function(state, action){
 
-      var editingSong = state.data.find(function(song){ 
-          return song.id === action.id; 
-      });
+      var editingSong = state.data.find(songFactory.createQueryById(action.id));
 
       return {
         editingSong: editingSong ? editingSong : {},
@@ -38,9 +36,9 @@ var actions = {
   // updates the song being edited as the user types in the form
   changeEditingSong: actionFactory.action(
   
-    'CHANGE_EDITING_SONG', ['artist', 'song', 'tags', 'id'],
+    'CHANGE_EDITING_SONG', ['artist', 'name', 'tags', 'id'],
     function (state, action){
-      return { editingSong: SongFactory.fromSongish(action) };
+      return { editingSong: songFactory.fromSongish(action) };
     }
   ),
 
@@ -153,7 +151,7 @@ actions.saveSong = actionFactory.complexAction(
     return function(dispatch){
       dispatch(actions.startSavingSong.creator());
 
-      var song = SongFactory.createSong(artist, songName, tags, id);
+      var song = songFactory.createSong(artist, songName, tags, id);
 
       return axios.post('http://localhost:3000/api/setlist', song)
         .then(function(response){

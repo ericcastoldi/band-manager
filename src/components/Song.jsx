@@ -7,7 +7,7 @@ var Song = React.createClass({
 
     return (
       <div className="song">
-        <em>{this.props.artist} - {this.props.song}</em>
+        <em>{this.props.artist} - {this.props.name}</em>
         <small>{renderableTags}</small>
       </div>
     );
@@ -16,7 +16,7 @@ var Song = React.createClass({
 
 Song.propTypes = {
   artist: React.PropTypes.string,
-  song: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string.isRequired,
   tags: React.PropTypes.arrayOf(React.PropTypes.string)
 }
 
