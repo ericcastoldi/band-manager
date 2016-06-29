@@ -3,7 +3,7 @@ var React = require('react');
 var Song = React.createClass({
   render: function() {
     var tags = [];
-    var renderableTags =  tags.concat(this.props.tags).join(', ');
+    var renderableTags = tags.concat(this.props.tags).join(', ');
 
     return (
       <div className="song">
@@ -18,7 +18,7 @@ Song.propTypes = {
   artist: React.PropTypes.string,
   name: React.PropTypes.string.isRequired,
   tags: React.PropTypes.arrayOf(React.PropTypes.string)
-}
+};
 
 
 module.exports = Song;

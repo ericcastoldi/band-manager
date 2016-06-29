@@ -9,7 +9,8 @@ var SongManagement = React.createClass({
           <SongList />
           <SongForm />
         </div>
-  )}
+      );
+    }
 });
 
 module.exports = SongManagement;

@@ -8,30 +8,30 @@ var SongFields = React.createClass({
   },
 
   nameChanged: function (e) {
-    this.fieldChanged({name: e.target.value})
+    this.fieldChanged({name: e.target.value});
   },
 
   tagsChanged: function (e) {
     var tags = [];
     var renderedTags = e.target.value;
-    
+
     this.fieldChanged({
       tags: tags.concat(renderedTags.split(','))
-                .map(function(tag){ 
-                  return tag.trim(); 
+                .map(function(tag){
+                  return tag.trim();
                 })
       });
   },
 
   fieldChanged: function(change){
-    
+
     var updatedSong = Object.assign({}, this.props, change);
-    
+
     console.dir(change);
 
     this.props.editingSongChanged(
-      updatedSong.artist, 
-      updatedSong.name, 
+      updatedSong.artist,
+      updatedSong.name,
       updatedSong.tags,
       updatedSong.id
     );
@@ -39,44 +39,44 @@ var SongFields = React.createClass({
 
   getDefaultProps: function() {
     return {
-      artist: '', 
-      name: '', 
+      artist: '',
+      name: '',
       tags: [],
       id: undefined
-    }
+    };
   },
 
   render: function(){
     var tags = [];
     var renderableTags = tags.concat(this.props.tags).map(function(tag){ return tag.trim(); }).join(', ');
 
-      
+
       var inputs = [
-        { 
-          key: 'songform-artist', 
-          placeholder: 'Artista', 
-          value:this.props.artist, 
+        {
+          key: 'songfield-artist',
+          placeholder: 'Artista',
+          value: this.props.artist,
           changed: this.artistChanged
         },
-        { 
-          key: 'songform-name', 
-          placeholder: 'Música', 
-          value:this.props.name, 
-          changed: this.nameChanged 
+        {
+          key: 'songfield-name',
+          placeholder: 'Música',
+          value: this.props.name,
+          changed: this.nameChanged
         },
-        { 
-          key: 'songform-tags', 
-          placeholder: 'tags... 80s, rock, love songs, etc.', 
-          value: renderableTags, 
-          changed: this.tagsChanged 
+        {
+          key: 'songfield-tags',
+          placeholder: 'tags... 80s, rock, love songs, etc.',
+          value: renderableTags,
+          changed: this.tagsChanged
         }
       ];
 
       var disableFields = this.props.disabled;
       var renderedInputs = inputs.map(function (input) {
-        
+
         return (
-          <input  type="text" 
+          <input type="text"
                   placeholder={input.placeholder}
                   value={input.value}
                   key={input.key}
@@ -103,8 +103,6 @@ SongFields.propTypes = {
   name: React.PropTypes.string,
   tags: React.PropTypes.arrayOf(React.PropTypes.string),
   editingSongChanged: React.PropTypes.func.isRequired
-}
+};
 
 module.exports = SongFields;
-
-

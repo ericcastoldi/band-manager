@@ -3,12 +3,12 @@
 }
 
 #app input{
-   display:block; 
+   display:block;
    width: 100%;
 }
 
 .song em {
-	display:block; 
+	display:block;
 }
 
 .songlist tr:hover td {
@@ -19,8 +19,8 @@
     background-color: rgba(30, 174, 219, 0.25);
 }
 
-h6.songlist {
-	margin: 25px 35px 25px 25px;	
+h6.messageBox {
+	margin: 25px 35px 25px 25px;
 }
 
 h6.error{

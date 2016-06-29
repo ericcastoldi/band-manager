@@ -14,28 +14,28 @@ var SongForm = React.createClass({
   saveSong: function(e){
 
     e.preventDefault();
-    
+
     this.props.saveSong(
-      this.props.artist, 
-      this.props.name, 
+      this.props.artist,
+      this.props.name,
       this.props.tags,
       this.props.id
     );
 
   },
-  
+
   render: function(){
-      
+
       return (
         <form className="songform" onSubmit={this.saveSong}>
-          
-          <SongFields 
+
+          <SongFields
               disabled={this.props.savingSong}
-              artist={this.props.artist} 
-              name={this.props.name} 
-              tags={this.props.tags} 
-              id={this.props.id} 
-              editingSongChanged={this.props.changeEditingSong} 
+              artist={this.props.artist}
+              name={this.props.name}
+              tags={this.props.tags}
+              id={this.props.id}
+              editingSongChanged={this.props.changeEditingSong}
           />
 
           <input disabled={this.props.savingSong} type="button" onClick={this.addNewSong} value="Novo" className="button" />
@@ -65,15 +65,15 @@ function mapSongFormStateToProps(state) {
       tags: state.editingSong.tags,
       id: state.editingSong.id,
       savingSong: state.savingSong
-    }
+    };
 }
 
 function mapSongFormDispatchToProps(dispatch) {
   return bindActionCreators({
-    newSong: actions.newSong.creator, 
-    saveSong: actions.saveSong.creator, 
+    newSong: actions.newSong.creator,
+    saveSong: actions.saveSong.creator,
     changeEditingSong: actions.changeEditingSong.creator
-  }, dispatch)
+  }, dispatch);
 }
 
 module.exports = connect(mapSongFormStateToProps, mapSongFormDispatchToProps)(SongForm);
