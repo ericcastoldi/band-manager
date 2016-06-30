@@ -1,4 +1,4 @@
-var songFactory = require('../../api/model/song');
+var songFactory = require('../../api/model/songFactory');
 var actionFactory = require('./actionFactory');
 var axios = require('axios');
 

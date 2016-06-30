@@ -10,7 +10,7 @@ var empty = function(){
 };
 
 var createPartialSong = function(artist, name, tags, id){
-	var song = {};
+	var song = Object.assign({}, emptySong);
 
 	if(name){
     song.name = name;
@@ -57,11 +57,9 @@ var fromPartialSongish = function(songish){
 };
 
 var queryById = function(id) {
-  var where = function(song){
+  return function(song){
     return song.id === id;
   };
-
-  return where;
 };
 
 module.exports = {
