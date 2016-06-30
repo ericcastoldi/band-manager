@@ -4,11 +4,15 @@
         "browser": true,
         "node": true
     },
-    "ecmaFeatures": {
-        "jsx": true,
-        "modules": true
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "modules": true
+        }
     },
-    "extends": "eslint:recommended",
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
     "plugins": [
         "react"
     ],
@@ -57,6 +61,8 @@
         "no-multi-spaces": 2,
         "no-multi-str": 2,
         "no-native-reassign": 2,
+        "no-console": 1,
+        "no-unused-vars": 1,
         "no-new": 2,
         "no-new-func": 2,
         "no-new-object": 2,

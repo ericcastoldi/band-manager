@@ -1,6 +1,11 @@
 var React = require('react');
 
 var Song = React.createClass({
+  propTypes: {
+    artist: React.PropTypes.string,
+    name: React.PropTypes.string.isRequired,
+    tags: React.PropTypes.arrayOf(React.PropTypes.string)
+  },
   render: function() {
     var tags = [];
     var renderableTags = tags.concat(this.props.tags).join(', ');
@@ -13,12 +18,5 @@ var Song = React.createClass({
     );
   }
 });
-
-Song.propTypes = {
-  artist: React.PropTypes.string,
-  name: React.PropTypes.string.isRequired,
-  tags: React.PropTypes.arrayOf(React.PropTypes.string)
-};
-
 
 module.exports = Song;

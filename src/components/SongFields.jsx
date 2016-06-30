@@ -2,6 +2,14 @@ var React = require('react');
 
 var SongFields = React.createClass({
 
+  propTypes: {
+    disabled: React.PropTypes.bool,
+    id: React.PropTypes.number,
+    artist: React.PropTypes.string,
+    name: React.PropTypes.string,
+    tags: React.PropTypes.arrayOf(React.PropTypes.string),
+    editingSongChanged: React.PropTypes.func.isRequired
+  },
 
   artistChanged: function (e) {
     this.fieldChanged({artist: e.target.value});
@@ -95,14 +103,5 @@ var SongFields = React.createClass({
   }
 
 });
-
-SongFields.propTypes = {
-  disabled: React.PropTypes.bool,
-  id: React.PropTypes.number,
-  artist: React.PropTypes.string,
-  name: React.PropTypes.string,
-  tags: React.PropTypes.arrayOf(React.PropTypes.string),
-  editingSongChanged: React.PropTypes.func.isRequired
-};
 
 module.exports = SongFields;

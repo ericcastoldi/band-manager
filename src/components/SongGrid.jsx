@@ -3,6 +3,18 @@ var Song = require('./Song.jsx');
 
 var SongGrid = React.createClass({
 
+  propTypes: {
+    selectSong: React.PropTypes.func.isRequired,
+    selectedSong: React.PropTypes.number,
+    data: React.PropTypes.arrayOf(
+      React.PropTypes.shape({
+        id: React.PropTypes.number,
+        artist: React.PropTypes.string,
+        name: React.PropTypes.string,
+        tags: React.PropTypes.array
+      }))
+  },
+
   rowClicked: function(id) {
     console.log('rowClicked' + id);
     this.props.selectSong(id);
@@ -50,17 +62,5 @@ var SongGrid = React.createClass({
     return songs;
   }
 });
-
-SongGrid.propTypes = {
-  selectSong: React.PropTypes.func.isRequired,
-  selectedSong: React.PropTypes.number,
-  data: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      id: React.PropTypes.number,
-      artist: React.PropTypes.string,
-      name: React.PropTypes.string,
-      tags: React.PropTypes.array
-    }))
-};
 
 module.exports = SongGrid;

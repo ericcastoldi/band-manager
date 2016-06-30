@@ -7,6 +7,17 @@ var bindActionCreators = require('redux').bindActionCreators;
 
 var SongForm = React.createClass({
 
+  propTypes: {
+    id: React.PropTypes.number,
+    artist: React.PropTypes.string,
+    name: React.PropTypes.string,
+    tags: React.PropTypes.arrayOf(React.PropTypes.string),
+    newSong: React.PropTypes.func.isRequired,
+    saveSong: React.PropTypes.func.isRequired,
+    savingSong: React.PropTypes.bool,
+    changeEditingSong: React.PropTypes.func.isRequired
+  },
+
   addNewSong: function(){
     this.props.newSong();
   },
@@ -45,18 +56,6 @@ var SongForm = React.createClass({
       );
   }
 });
-
-SongForm.propTypes = {
-
-  id: React.PropTypes.number,
-  artist: React.PropTypes.string,
-  name: React.PropTypes.string,
-  tags: React.PropTypes.arrayOf(React.PropTypes.string),
-  newSong: React.PropTypes.func.isRequired,
-  saveSong: React.PropTypes.func.isRequired,
-  savingSong: React.PropTypes.bool,
-  changeEditingSong: React.PropTypes.func.isRequired
-};
 
 function mapSongFormStateToProps(state) {
     return {
