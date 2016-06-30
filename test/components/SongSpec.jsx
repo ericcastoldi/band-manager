@@ -1,4 +1,6 @@
+/* global describe, before, it */
 require('./fakedom')('<html><body></body></html>');
+
 var expect = require('chai').expect;
 var React = require('react');
 var ReactTestUtils = require('react-addons-test-utils');

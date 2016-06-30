@@ -1,10 +1,12 @@
+/* global describe, before, beforeEach, it, after, afterEach */
+
 var fileSystemMock = {};
 fileSystemMock.readFile = function(p, cb) { cb(null, '{"p": 5}'); };
-fileSystemMock.writeFile = function(p, d, errcb) {  };
+fileSystemMock.writeFile = function(p, d, errcb) {};
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var mock = require('mock-require'); 
+var mock = require('mock-require');
 
 mock('fs', fileSystemMock);
 var Repository = require('../../src/api/repository.js');
@@ -17,45 +19,45 @@ describe('Repository', function(){
 
 			this.doneSpy = sinon.spy();
 			this.readFileSpy = sinon.spy(fileSystemMock, 'readFile');
-		 	this.jsonFilePath = 'path-to-file';
-		 	this.repo = new Repository(this.jsonFilePath);
-		 	this.repo.all(this.doneSpy);
+			this.jsonFilePath = 'path-to-file';
+			this.repo = new Repository(this.jsonFilePath);
+			this.repo.all(this.doneSpy);
 
-  		});
+		});
 
 
 
-	 	it('should read a json file.', function(){
+		it('should read a json file.', function(){
 
-	 		expect(this.readFileSpy.calledOnce).to.be.true;
-	 		expect(this.readFileSpy.calledWith(this.jsonFilePath)).to.be.true;
+			expect(this.readFileSpy.calledOnce).to.be.true;
+			expect(this.readFileSpy.calledWith(this.jsonFilePath)).to.be.true;
 
-	 	});
+		});
 
-	 	it('should call done() passing the JSON parsed data read from json file.', function(){
-	 		
-	 		expect(this.doneSpy.calledOnce).to.be.true;
-	 		expect(this.doneSpy.calledWithExactly({p : 5})).to.be.true;
+		it('should call done() passing the JSON parsed data read from json file.', function(){
 
-	 	});
+			expect(this.doneSpy.calledOnce).to.be.true;
+			expect(this.doneSpy.calledWithExactly({p: 5})).to.be.true;
 
-	 	it('should handle errors from fs.readFile.', function(){
-	 		var err = new Error();
+		});
+
+		it('should handle errors from fs.readFile.', function(){
+			var err = new Error();
 			fileSystemMock.readFile = function(p, cb) { cb(err, null); };
-			
-	 		var consoleErrorStub = sinon.stub(console, 'error');
 
-	 		this.repo.all(sinon.stub());
-			
+			var consoleErrorStub = sinon.stub(console, 'error');
+
+			this.repo.all(sinon.stub());
+
 			expect(consoleErrorStub.calledOnce).to.be.true;
-	 		expect(consoleErrorStub.calledWithExactly(err)).to.be.true;
+			expect(consoleErrorStub.calledWithExactly(err)).to.be.true;
 
-	 		consoleErrorStub.restore();
-	 	});
+			consoleErrorStub.restore();
+		});
 
-	 	after(function(){
-	 		this.readFileSpy.restore();
-	 	});
+		after(function(){
+			this.readFileSpy.restore();
+		});
 	});
 
 	describe('add()', function(){
@@ -63,17 +65,17 @@ describe('Repository', function(){
 			this.doneSpy = sinon.spy();
 			this.jsonFilePath = 'path-to-file';
 			this.writeFileSpy = sinon.spy(fileSystemMock, 'writeFile');
-		 	
-		 	var localData = [{ key: 'xpto' }];
-		 	this.repo = new Repository(this.jsonFilePath);
-			this.allStub = sinon.stub(this.repo, "all", function(done){
-				done(localData)
+
+			var localData = [{ key: 'xpto' }];
+			this.repo = new Repository(this.jsonFilePath);
+			this.allStub = sinon.stub(this.repo, 'all', function(done){
+				done(localData);
 			});
 
-		 	this.repo.add({key: 'mnbv'}, this.doneSpy);
+			this.repo.add({key: 'mnbv'}, this.doneSpy);
 
-		 	this.data = localData;
-  		});
+			this.data = localData;
+		});
 
 		it('should call all() to get all the data.', function(){
 			expect(this.allStub.calledOnce).to.be.true;
@@ -96,41 +98,41 @@ describe('Repository', function(){
 		});
 
 		after(function(){
-	 		this.writeFileSpy.restore();
-	 	});
+			this.writeFileSpy.restore();
+		});
 	});
 
 	describe('update()', function(){
 		before('configure repo and fake data', function() {
 			this.find = function(where, found, notFound){};
-			this.where = function(obj){ return obj.key == 123  };
+			this.where = function(obj){ return obj.key === 123; };
 			this.whereSpy = sinon.spy();
 
 			this.persistedData = [{key: 123, value: 'abc'}, {key: 456, value: 'def'}];
 
 			this.jsonFilePath = 'path-to-file';
 			this.repo = new Repository(this.jsonFilePath);
-  		});
-		
-		beforeEach('refresh the writeFileSpy', function(){ 
-			this.doneSpy = sinon.spy();
-			this.writeFileSpy = sinon.spy(fileSystemMock, 'writeFile'); 
-		});
-		
-		afterEach('restore the writeFileSpy', function(){ 
-			this.findStub.restore();	
-			this.writeFileSpy.restore(); 
 		});
 
-  		it('should update an existing object.', function(){
+		beforeEach('refresh the writeFileSpy', function(){
+			this.doneSpy = sinon.spy();
+			this.writeFileSpy = sinon.spy(fileSystemMock, 'writeFile');
+		});
+
+		afterEach('restore the writeFileSpy', function(){
+			this.findStub.restore();
+			this.writeFileSpy.restore();
+		});
+
+		it('should update an existing object.', function(){
 			var obj = {key: 123, value: 'abc'};
 			var data = this.persistedData;
 			var find = function(where, found, notFound){ found(obj, data); };
-			this.findStub = sinon.stub(this.repo, "find", find);
-			
+			this.findStub = sinon.stub(this.repo, 'find', find);
+
 			// act!
-			this.repo.update({key:999, value:'updated'}, this.where, this.doneSpy)
-			
+			this.repo.update({key: 999, value: 'updated'}, this.where, this.doneSpy);
+
 			expect(this.persistedData.length).to.equal(2);
 			expect(this.persistedData[0].key).to.equal(999);
 			expect(this.persistedData[0].value).to.equal('updated');
@@ -145,15 +147,15 @@ describe('Repository', function(){
 		it('should push the new obj into the data collection when it doesn\'t already exists.', function(){
 			var data = this.persistedData;
 			var find = function(where, found, notFound){ notFound(data); };
-			this.findStub = sinon.stub(this.repo, "find", find);
+			this.findStub = sinon.stub(this.repo, 'find', find);
 
 			// act!
-			this.repo.update({key:789, value:'new value'}, this.whereSpy, this.doneSpy);
-			
+			this.repo.update({key: 789, value: 'new value'}, this.whereSpy, this.doneSpy);
+
 			expect(this.persistedData.length).to.equal(3);
 			expect(this.persistedData[2].key).to.equal(789);
 			expect(this.persistedData[2].value).to.equal('new value');
-			
+
 			expect(this.writeFileSpy.calledOnce).to.be.true;
 			expect(this.findStub.calledWith(this.whereSpy)).to.be.true;
 
@@ -172,20 +174,20 @@ describe('Repository', function(){
 
 			this.writeFileSpy = sinon.spy(fileSystemMock, 'writeFile');
 
-		 	this.repo = new Repository('path-to-file');
-			this.allStub = sinon.stub(this.repo, "all", function(done){
-				done(data)
+			this.repo = new Repository('path-to-file');
+			this.allStub = sinon.stub(this.repo, 'all', function(done){
+				done(data);
 			});
 
-		 	this.data = data;
+			this.data = data;
 		});
 
-		beforeEach('refresh the spies and stubs', function(){ 
+		beforeEach('refresh the spies and stubs', function(){
 			this.foundSpy = sinon.spy();
 			this.notFoundSpy = sinon.spy();
 			this.whereStub = sinon.stub();
 		});
-		
+
 		it('should call where() for all objects in the data collection until one of them meets the where condition.', function(){
 			this.repo.find(this.whereStub, this.foundSpy, this.notFoundSpy);
 
@@ -201,7 +203,7 @@ describe('Repository', function(){
 
 			expect(this.foundSpy.calledOnce).to.be.true;
 			expect(this.foundSpy.calledWithExactly(this.foundObj, this.data)).to.be.true;
-			
+
 			expect(this.notFoundSpy.called).to.be.false;
 		});
 
@@ -214,7 +216,7 @@ describe('Repository', function(){
 
 			expect(this.notFoundSpy.calledOnce).to.be.true;
 			expect(this.notFoundSpy.calledWithExactly(this.data)).to.be.true;
-			
+
 			expect(this.foundSpy.called).to.be.false;
 		});
 

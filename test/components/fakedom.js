@@ -1,5 +1,5 @@
 module.exports = function(markup) {
-  if (typeof document !== 'undefined') return;
+  if (typeof document !== 'undefined') { return; }
 
   var defaultMarkup = '<!doctype html><html><body><div id="content"></div></body></html>';
 
