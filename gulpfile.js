@@ -15,8 +15,8 @@ var runSequence = require('run-sequence');
 require('babel-core/register');
 
 // Files to process
-var TEST_FILES = 'test/**/*Spec.{jsx,js}';
 var SRC_FILES = 'src/**/*.{jsx,js}';
+var TEST_FILES = 'test/**/*Spec.{jsx,js}';
 
 gulp.task('clean', function () {
   return del(['dist', 'build', 'coverage', 'public']);
@@ -40,7 +40,7 @@ gulp.task('test', function() {
 });
 
 gulp.task('cover', ['init-istanbul'], function () {
-  return gulp.src(['test/api/*Spec.js'])
+  return gulp.src(['test/**/*Spec.js'])
     .pipe(mocha({reporter: 'spec'}))
     .pipe(istanbul.writeReports({ reporters: [ 'lcov' ] }));
 });
