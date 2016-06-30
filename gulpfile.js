@@ -1,11 +1,9 @@
 var gulp = require('gulp');
 var nodemon = require('gulp-nodemon');
-var run = require('gulp-run');
 var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
 var gutil = require('gulp-util');
 var istanbul = require('gulp-istanbul');
-var babel = require('babel-core/register');
 var del = require('del');
 var source = require('vinyl-source-stream');
 var reactify = require('reactify');
@@ -30,7 +28,7 @@ gulp.task('lint', function(){
     .src(['**/*.{js,jsx}', '!coverage/**', '!node_modules/**', '!public/**', '!test/**'])
     .pipe(eslint())
     .pipe(eslint.result(function (result) {
-      console.log('Linted file: ' + result.filePath + '(Errors: ' + result.errorCount + '| Warnings: ' + result.warningCount + ')'); 
+      console.log('Linted file: ' + result.filePath + '(Errors: ' + result.errorCount + '| Warnings: ' + result.warningCount + ')');
     }))
     .pipe(eslint.format())
     .pipe(eslint.failOnError());
@@ -71,20 +69,20 @@ gulp.task('copy-webapp', function(){
 });
 
 gulp.task('launch', function () {
-  
+
   var started = false;
-  
+
   return nodemon({
     script: 'app.js'
   }).on('start', function () {
     if (!started) {
-      started = true; 
-    } 
+      started = true;
+    }
   });
 });
 
 gulp.task('default', ['clean'], function(done){
-  runSequence('copy-webapp', 'browserify', 'launch', done)
+  runSequence('copy-webapp', 'browserify', 'launch', done);
 });
 
 gulp.task('qa', ['lint', 'test'], function(){
@@ -94,7 +92,7 @@ gulp.task('travis', ['clean'], function(done){
   runSequence('lint', 'cover', done);
 });
 
-gulp.task('tdd', function(done) {
+gulp.task('tdd', function() {
   gulp.watch([ TEST_FILES, SRC_FILES ], ['test']).on('error', gutil.log);
 });
 
@@ -133,8 +131,8 @@ gulp.task('coverage:instrument', function() {
   return gulp.src(SRC_FILES)
     .pipe(istanbul({
       includeUntested: true,
-      preserveComments: true,  
-      noCompact:true,
+      preserveComments: true,
+      noCompact: true,
       instrumenter: isparta.Instrumenter // Use the isparta instrumenter (code coverage for ES6)
       // Istanbul configuration (see https://github.com/SBoudrias/gulp-istanbul#istanbulopt)
       // ...

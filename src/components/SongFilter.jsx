@@ -1,6 +1,6 @@
 var React = require('react');
 
-var SongFilterForm = React.createClass({
+var SongFilter = React.createClass({
 
   render: function(){
     return (
@@ -14,4 +14,4 @@ var SongFilterForm = React.createClass({
   }
 });
 
-module.exports = SongFilterForm;
+module.exports = SongFilter;
