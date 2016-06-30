@@ -46,7 +46,7 @@ gulp.task('cover', ['init-istanbul'], function () {
 });
 
 gulp.task('init-istanbul', function () {
-  return gulp.src(['src/api/*.js'])
+  return gulp.src(['src/**/*.js'])
     .pipe(istanbul({includeUntested: true}))
     .pipe(istanbul.hookRequire());
 });
