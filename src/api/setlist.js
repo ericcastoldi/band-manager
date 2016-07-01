@@ -1,5 +1,5 @@
-var Repository = require('./repository');
-var songFactory = require('./model/songFactory');
+var Repository = require('./repository.js');
+var songFactory = require('./model/songFactory.js');
 
 function Setlist(){
   var SETLIST_FILE = 'src/data/setlist.json';

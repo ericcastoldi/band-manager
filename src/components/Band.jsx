@@ -1,7 +1,7 @@
 var React = require('react');
 var SongManagement = require('./SongManagement.jsx');
 var Provider = require('react-redux').Provider;
-var store = require('./state/store');
+var store = require('./state/store.js');
 
 var Band = React.createClass({
   propTypes: {

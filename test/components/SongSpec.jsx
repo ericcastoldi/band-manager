@@ -1,5 +1,6 @@
 /* global describe, before, it */
 require('./fakedom')('<html><body></body></html>');
+var Song = require('../../src/components/Song.jsx');
 
 var expect = require('chai').expect;
 var React = require('react');
@@ -8,7 +9,7 @@ var ReactTestUtils = require('react-addons-test-utils');
 describe('Song component', function(){
 
   before('render and locate element', function() {
-    var Song = require('../../src/components/Song.jsx');
+
     var tags = ['reggae', 'power'];
     var songComponentElementTree = ReactTestUtils.renderIntoDocument(
       <Song artist="The Artist" name="Singin' Songs About The Future" tags={tags} />
