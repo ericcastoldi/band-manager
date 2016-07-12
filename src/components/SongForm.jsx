@@ -7,6 +7,17 @@ var bindActionCreators = require('redux').bindActionCreators;
 
 var SongForm = React.createClass({
 
+  propTypes: {
+    id: React.PropTypes.number,
+    artist: React.PropTypes.string,
+    name: React.PropTypes.string,
+    tags: React.PropTypes.arrayOf(React.PropTypes.string),
+    newSong: React.PropTypes.func.isRequired,
+    saveSong: React.PropTypes.func.isRequired,
+    savingSong: React.PropTypes.bool,
+    changeEditingSong: React.PropTypes.func.isRequired
+  },
+
   addNewSong: function(){
     this.props.newSong();
   },
@@ -14,28 +25,28 @@ var SongForm = React.createClass({
   saveSong: function(e){
 
     e.preventDefault();
-    
+
     this.props.saveSong(
-      this.props.artist, 
-      this.props.name, 
+      this.props.artist,
+      this.props.name,
       this.props.tags,
       this.props.id
     );
 
   },
-  
+
   render: function(){
-      
+
       return (
-        <form className="songform" onSubmit={this.saveSong}>
-          
-          <SongFields 
+        <form className="SongForm" onSubmit={this.saveSong}>
+
+          <SongFields
               disabled={this.props.savingSong}
-              artist={this.props.artist} 
-              name={this.props.name} 
-              tags={this.props.tags} 
-              id={this.props.id} 
-              editingSongChanged={this.props.changeEditingSong} 
+              artist={this.props.artist}
+              name={this.props.name}
+              tags={this.props.tags}
+              id={this.props.id}
+              editingSongChanged={this.props.changeEditingSong}
           />
 
           <input disabled={this.props.savingSong} type="button" onClick={this.addNewSong} value="Novo" className="button" />
@@ -46,18 +57,6 @@ var SongForm = React.createClass({
   }
 });
 
-SongForm.propTypes = {
-
-  id: React.PropTypes.number,
-  artist: React.PropTypes.string,
-  name: React.PropTypes.string,
-  tags: React.PropTypes.arrayOf(React.PropTypes.string),
-  newSong: React.PropTypes.func.isRequired,
-  saveSong: React.PropTypes.func.isRequired,
-  savingSong: React.PropTypes.bool,
-  changeEditingSong: React.PropTypes.func.isRequired
-};
-
 function mapSongFormStateToProps(state) {
     return {
       artist: state.editingSong.artist,
@@ -65,15 +64,15 @@ function mapSongFormStateToProps(state) {
       tags: state.editingSong.tags,
       id: state.editingSong.id,
       savingSong: state.savingSong
-    }
+    };
 }
 
 function mapSongFormDispatchToProps(dispatch) {
   return bindActionCreators({
-    newSong: actions.newSong.creator, 
-    saveSong: actions.saveSong.creator, 
+    newSong: actions.newSong.creator,
+    saveSong: actions.saveSong.creator,
     changeEditingSong: actions.changeEditingSong.creator
-  }, dispatch)
+  }, dispatch);
 }
 
 module.exports = connect(mapSongFormStateToProps, mapSongFormDispatchToProps)(SongForm);

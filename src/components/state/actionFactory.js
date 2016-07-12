@@ -1,12 +1,14 @@
+var initialState = require('./initialState');
+
 var actionCreator = function(type, argNames){
     return function(){
 
-        var action = {  };
+        var action = {};
 
         if(argNames){
             var args = arguments;
-            argNames.forEach(function(argName, index) { 
-                action[argName] = args[index]; 
+            argNames.forEach(function(argName, index) {
+                action[argName] = args[index];
             });
         }
 
@@ -15,12 +17,10 @@ var actionCreator = function(type, argNames){
         return action;
 
     };
-}
+};
 
 var safeReducer = function(type, reducer){
   return function(state, action){
-
-      console.log(action);
 
       if(reducer && action.type === type){
           var change = Object.assign({}, reducer(state, action));
@@ -29,12 +29,12 @@ var safeReducer = function(type, reducer){
 
       return state;
     };
-}
+};
 
 
 
-module.exports  =  {
-  
+module.exports = {
+
   cleanAction: function(type, reducer){
     return {
         type: type,
@@ -62,7 +62,7 @@ module.exports  =  {
 
   rootReducer: function (actions){
     return function(state, action){
-  
+
       if(!state){
         state = initialState;
       }

@@ -1,5 +1,5 @@
 var thunkMiddleware = require('redux-thunk').default;
-var createLogger =  require('redux-logger');
+var createLogger = require('redux-logger');
 
 var initialState = require('./initialState');
 var redux = require('redux');
@@ -10,12 +10,12 @@ var loggerMiddleware = createLogger();
 
 module.exports = redux.createStore(
 
-	rootReducer, 
+	rootReducer,
 
 	initialState,
 
 	redux.applyMiddleware(
-	    thunkMiddleware,
-    	loggerMiddleware
- 	)
+		thunkMiddleware,
+		loggerMiddleware
+	)
 );

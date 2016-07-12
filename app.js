@@ -23,6 +23,7 @@ app.use(function(req, res, next) {
 
 app.get('/api/setlist', setlist.all);
 app.post('/api/setlist', setlist.update);
+app.post('/api/filterSetlist', setlist.byTags);
 
 
 app.listen(app.get('port'), function() {

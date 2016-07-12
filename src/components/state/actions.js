@@ -1,14 +1,13 @@
-var redux = require('redux');
-var songFactory = require('../../api/model/song');
+var songFactory = require('../../api/model/songFactory');
 var actionFactory = require('./actionFactory');
 var axios = require('axios');
 
 var actions = {
-  
+
   // cleans the selectedSong and the editingSong
   newSong: actionFactory.cleanAction(
-    
-    'NEW_SONG',  
+
+    'NEW_SONG',
     function(state, action){
       return {
         editingSong: {},
@@ -21,7 +20,7 @@ var actions = {
   // given an id, it gets the corresponding song in state.data
   selectSong: actionFactory.action(
 
-    'SELECT_SONG', ['id'], 
+    'SELECT_SONG', ['id'],
     function(state, action){
 
       var editingSong = state.data.find(songFactory.createQueryById(action.id));
@@ -35,14 +34,14 @@ var actions = {
 
   // updates the song being edited as the user types in the form
   changeEditingSong: actionFactory.action(
-  
+
     'CHANGE_EDITING_SONG', ['artist', 'name', 'tags', 'id'],
     function (state, action){
-      return { editingSong: songFactory.fromSongish(action) };
+      return { editingSong: songFactory.fromPartialSongish(action) };
     }
   ),
 
-  
+
 
   requestSongs: actionFactory.cleanAction(
     'REQUEST_SONGS',
@@ -59,7 +58,8 @@ var actions = {
     function(state, action){
       return {
         data: action.response,
-        fetchingSongs: false
+        fetchingSongs: false,
+        filteredTags: []
       };
     }
   ),
@@ -103,17 +103,66 @@ var actions = {
         savingSong: false
       };
     }
+  ),
+
+  changeFilteredTags: actionFactory.action(
+
+    'CHANGE_FILTERED_TAGS', ['tags'],
+
+    function (state, action){
+      return { filteredTags: action.tags };
+    }
+  ),
+
+  requestFilteredSongs: actionFactory.cleanAction(
+    'REQUEST_FILTERED_SONGS',
+    function(state, action){
+      return {
+        errorFetchingSongs: false,
+        fetchingSongs: true
+      };
+    }
+  ),
+
+  receiveFilteredSongs: actionFactory.action(
+    'RECEIVE_FILTERED_SONGS', ['response'],
+    function(state, action){
+      return {
+        data: action.response,
+        fetchingSongs: false
+      };
+    }
   )
 };
 
 // async
+actions.filterSongs = actionFactory.complexAction(
+
+  'FILTER_SONGS',
+
+  function(tags){
+    return function(dispatch){
+
+      dispatch(actions.requestFilteredSongs.creator());
+
+      return axios.post('http://localhost:3000/api/filterSetlist', tags)
+        .then(function(response){
+          dispatch(actions.receiveFilteredSongs.creator(response.data));
+        })
+        .catch(function (response) {
+          dispatch(actions.cannotReceiveSongs.creator());
+        });
+    };
+  }
+);
+
 actions.fetchSongs = actionFactory.complexAction(
 
   'FETCH_SONGS',
-  
+
   // action creator
   function(){
-    
+
     // async
     return function(dispatch){
 
@@ -124,16 +173,15 @@ actions.fetchSongs = actionFactory.complexAction(
           dispatch(actions.receiveSongs.creator(response.data));
         })
         .catch(function (response) {
-          dispatch(actions.cannotSaveSong.creator());
-        });  
-      
+          dispatch(actions.cannotReceiveSongs.creator());
+        });
 
-    }
+
+    };
   },
-  
+
   // reducer
   function(state, action){
-    console.log("Started fetching...");
     return state;
   }
 
@@ -142,11 +190,11 @@ actions.fetchSongs = actionFactory.complexAction(
 // creates a new song or updates an existing one
 actions.saveSong = actionFactory.complexAction(
 
-  'SAVE_SONG', 
-  
+  'SAVE_SONG',
+
   // action creator
   function(artist, songName, tags, id){
-    
+
     // async
     return function(dispatch){
       dispatch(actions.startSavingSong.creator());
@@ -159,16 +207,14 @@ actions.saveSong = actionFactory.complexAction(
           dispatch(actions.receiveSongs.creator(response.data));
         })
         .catch(function (response) {
-          dispatch(actions.cannotReceiveSongs.creator());
-        });  
-      
+          dispatch(actions.cannotSaveSong.creator());
+        });
 
-    }
+    };
   },
-  
+
   // reducer
   function(state, action){
-    console.log("Started fetching...");
     return state;
   }
 );

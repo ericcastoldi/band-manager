@@ -3,12 +3,12 @@
 }
 
 #app input{
-   display:block; 
+   display:block;
    width: 100%;
 }
 
 .song em {
-	display:block; 
+	display:block;
 }
 
 .songlist tr:hover td {
@@ -19,10 +19,27 @@
     background-color: rgba(30, 174, 219, 0.25);
 }
 
-h6.songlist {
-	margin: 25px 35px 25px 25px;	
+h6.messageBox {
+	margin: 25px 35px 25px 25px;
 }
 
 h6.error{
 	color: #DC283F;
+}
+
+.SongFilter-form{
+  float: right;
+  width: 305pt;
+  margin-bottom: 0pt;
+  border-bottom: 3pt #ccc solid;
+}
+
+.SongFilter-form input{
+  display: inline !important;
+  width: 200pt !important;
+}
+
+.SongFilter-form input.SongFilter-button{
+  width: 100pt !important;
+  margin-left: 5pt;
 }

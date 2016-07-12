@@ -1,7 +1,7 @@
 [
     {
         "id": 1388534400000,
-        "artist": "krushing demons",
+        "artist": "krushing demons ",
         "name": "i came to chew gum and krush demons, and i'm all out of gum",
         "tags": [
             "autoral",
@@ -69,6 +69,23 @@
         "tags": [
             "tropicalia",
             "brasil"
+        ]
+    },
+    {
+        "id": 1467126553295,
+        "artist": "asdf aaa",
+        "name": "def",
+        "tags": [
+            "asdf"
+        ]
+    },
+    {
+        "id": 123,
+        "artist": "An Artist",
+        "name": "The Song",
+        "tags": [
+            "tag",
+            "hash"
         ]
     }
 ]
