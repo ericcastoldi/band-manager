@@ -38,7 +38,7 @@ var SongForm = React.createClass({
   render: function(){
 
       return (
-        <form className="songform" onSubmit={this.saveSong}>
+        <form className="SongForm" onSubmit={this.saveSong}>
 
           <SongFields
               disabled={this.props.savingSong}

@@ -1,5 +1,7 @@
 var initialState = {
 
+  filteredTags: [],
+
   // The song object being edited in the SongForm
   editingSong: {},
 

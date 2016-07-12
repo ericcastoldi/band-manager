@@ -22,8 +22,6 @@ var actionCreator = function(type, argNames){
 var safeReducer = function(type, reducer){
   return function(state, action){
 
-      console.log(action);
-
       if(reducer && action.type === type){
           var change = Object.assign({}, reducer(state, action));
           return Object.assign({}, state, change);

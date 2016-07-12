@@ -11,6 +11,29 @@ function Setlist(){
     });
   };
 
+  this.byTags = function (req, res){
+
+    var tags = req.body;
+
+    if(!tags || tags.length === 0){
+      setlistRepo.all(function(data){
+        res.json(data);
+      });
+
+      return;
+    }
+
+    setlistRepo.filter(function(song){
+      var ok = true;
+      for (var i = 0; i < tags.length; i++) {
+        ok = ok && (song.tags.indexOf(tags[i]) > -1);
+      }
+      return ok;
+    }, function(filteredData){
+      res.json(filteredData);
+    });
+  };
+
   this.save = function(req, res) {
 
     var song = songFactory.fromSongish(req.body);

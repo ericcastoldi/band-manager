@@ -26,3 +26,20 @@ h6.messageBox {
 h6.error{
 	color: #DC283F;
 }
+
+.SongFilter-form{
+  float: right;
+  width: 305pt;
+  margin-bottom: 0pt;
+  border-bottom: 3pt #ccc solid;
+}
+
+.SongFilter-form input{
+  display: inline !important;
+  width: 200pt !important;
+}
+
+.SongFilter-form input.SongFilter-button{
+  width: 100pt !important;
+  margin-left: 5pt;
+}

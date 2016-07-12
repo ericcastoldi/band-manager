@@ -53,6 +53,16 @@ function Repository(jsonFilePath){
 		this.find(where, found, notFound);
 	};
 
+	this.filter = function(where, done){
+		this.all(function(data){
+			var filteredData = data.filter(function(song){
+				return where(song);
+			});
+
+			done(filteredData);
+		});
+	};
+
 	this.find = function(where, found, notFound){
 		this.all(function(data){
 

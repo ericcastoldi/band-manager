@@ -58,7 +58,8 @@ var actions = {
     function(state, action){
       return {
         data: action.response,
-        fetchingSongs: false
+        fetchingSongs: false,
+        filteredTags: []
       };
     }
   ),
@@ -102,10 +103,59 @@ var actions = {
         savingSong: false
       };
     }
+  ),
+
+  changeFilteredTags: actionFactory.action(
+
+    'CHANGE_FILTERED_TAGS', ['tags'],
+
+    function (state, action){
+      return { filteredTags: action.tags };
+    }
+  ),
+
+  requestFilteredSongs: actionFactory.cleanAction(
+    'REQUEST_FILTERED_SONGS',
+    function(state, action){
+      return {
+        errorFetchingSongs: false,
+        fetchingSongs: true
+      };
+    }
+  ),
+
+  receiveFilteredSongs: actionFactory.action(
+    'RECEIVE_FILTERED_SONGS', ['response'],
+    function(state, action){
+      return {
+        data: action.response,
+        fetchingSongs: false
+      };
+    }
   )
 };
 
 // async
+actions.filterSongs = actionFactory.complexAction(
+
+  'FILTER_SONGS',
+
+  function(tags){
+    return function(dispatch){
+
+      dispatch(actions.requestFilteredSongs.creator());
+
+      return axios.post('http://localhost:3000/api/filterSetlist', tags)
+        .then(function(response){
+          dispatch(actions.receiveFilteredSongs.creator(response.data));
+        })
+        .catch(function (response) {
+          dispatch(actions.cannotReceiveSongs.creator());
+        });
+    };
+  }
+);
+
 actions.fetchSongs = actionFactory.complexAction(
 
   'FETCH_SONGS',
