@@ -8,7 +8,7 @@ var actions = {
   newSong: actionFactory.cleanAction(
 
     'NEW_SONG',
-    function(state, action){
+    function (state, action) {
       return {
         editingSong: {},
         selectedSong: undefined
@@ -21,7 +21,7 @@ var actions = {
   selectSong: actionFactory.action(
 
     'SELECT_SONG', ['id'],
-    function(state, action){
+    function (state, action) {
 
       var editingSong = state.data.find(songFactory.createQueryById(action.id));
 
@@ -36,8 +36,10 @@ var actions = {
   changeEditingSong: actionFactory.action(
 
     'CHANGE_EDITING_SONG', ['artist', 'name', 'tags', 'id'],
-    function (state, action){
-      return { editingSong: songFactory.fromPartialSongish(action) };
+    function (state, action) {
+      return {
+        editingSong: songFactory.fromPartialSongish(action)
+      };
     }
   ),
 
@@ -45,7 +47,7 @@ var actions = {
 
   requestSongs: actionFactory.cleanAction(
     'REQUEST_SONGS',
-    function(state, action){
+    function (state, action) {
       return {
         errorFetchingSongs: false,
         fetchingSongs: true
@@ -55,7 +57,7 @@ var actions = {
 
   receiveSongs: actionFactory.action(
     'RECEIVE_SONGS', ['response'],
-    function(state, action){
+    function (state, action) {
       return {
         data: action.response,
         fetchingSongs: false,
@@ -66,7 +68,7 @@ var actions = {
 
   cannotReceiveSongs: actionFactory.action(
     'CANNOT_RECEIVE_SONGS', ['error'],
-    function(state, action){
+    function (state, action) {
       return {
         errorFetchingSongs: true,
         fetchingSongs: false
@@ -77,7 +79,7 @@ var actions = {
 
   startSavingSong: actionFactory.cleanAction(
     'START_SAVING_SONG',
-    function(state, action){
+    function (state, action) {
       return {
         errorSavingSong: false,
         savingSong: true
@@ -87,7 +89,7 @@ var actions = {
 
   doneSavingSong: actionFactory.cleanAction(
     'DONE_SAVING_SONG',
-    function(state, action){
+    function (state, action) {
       return {
         errorSavingSong: false,
         savingSong: false
@@ -97,7 +99,7 @@ var actions = {
 
   cannotSaveSong: actionFactory.cleanAction(
     'CANNOT_SAVE_SONG',
-    function(state, action){
+    function (state, action) {
       return {
         errorSavingSong: true,
         savingSong: false
@@ -109,14 +111,16 @@ var actions = {
 
     'CHANGE_FILTERED_TAGS', ['tags'],
 
-    function (state, action){
-      return { filteredTags: action.tags };
+    function (state, action) {
+      return {
+        filteredTags: action.tags
+      };
     }
   ),
 
   requestFilteredSongs: actionFactory.cleanAction(
     'REQUEST_FILTERED_SONGS',
-    function(state, action){
+    function (state, action) {
       return {
         errorFetchingSongs: false,
         fetchingSongs: true
@@ -126,7 +130,7 @@ var actions = {
 
   receiveFilteredSongs: actionFactory.action(
     'RECEIVE_FILTERED_SONGS', ['response'],
-    function(state, action){
+    function (state, action) {
       return {
         data: action.response,
         fetchingSongs: false
@@ -140,13 +144,13 @@ actions.filterSongs = actionFactory.complexAction(
 
   'FILTER_SONGS',
 
-  function(tags){
-    return function(dispatch){
+  function (tags) {
+    return function (dispatch) {
 
       dispatch(actions.requestFilteredSongs.creator());
 
-      return axios.post('http://localhost:3000/api/filterSetlist', tags)
-        .then(function(response){
+      return axios.post('/api/filterSetlist', tags)
+        .then(function (response) {
           dispatch(actions.receiveFilteredSongs.creator(response.data));
         })
         .catch(function (response) {
@@ -161,15 +165,15 @@ actions.fetchSongs = actionFactory.complexAction(
   'FETCH_SONGS',
 
   // action creator
-  function(){
+  function () {
 
     // async
-    return function(dispatch){
+    return function (dispatch) {
 
       dispatch(actions.requestSongs.creator());
 
-      return axios.get('http://localhost:3000/api/setlist')
-        .then(function(response){
+      return axios.get('/api/setlist')
+        .then(function (response) {
           dispatch(actions.receiveSongs.creator(response.data));
         })
         .catch(function (response) {
@@ -181,7 +185,7 @@ actions.fetchSongs = actionFactory.complexAction(
   },
 
   // reducer
-  function(state, action){
+  function (state, action) {
     return state;
   }
 
@@ -193,16 +197,16 @@ actions.saveSong = actionFactory.complexAction(
   'SAVE_SONG',
 
   // action creator
-  function(artist, songName, tags, id){
+  function (artist, songName, tags, id) {
 
     // async
-    return function(dispatch){
+    return function (dispatch) {
       dispatch(actions.startSavingSong.creator());
 
       var song = songFactory.createSong(artist, songName, tags, id);
 
-      return axios.post('http://localhost:3000/api/setlist', song)
-        .then(function(response){
+      return axios.post('/api/setlist', song)
+        .then(function (response) {
           dispatch(actions.doneSavingSong.creator());
           dispatch(actions.receiveSongs.creator(response.data));
         })
@@ -214,7 +218,7 @@ actions.saveSong = actionFactory.complexAction(
   },
 
   // reducer
-  function(state, action){
+  function (state, action) {
     return state;
   }
 );

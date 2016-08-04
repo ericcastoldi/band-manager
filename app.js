@@ -12,13 +12,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
-app.use(function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Cache-Control', 'no-cache');
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Cache-Control', 'no-cache');
 
-    next();
+  next();
 });
 
 app.get('/api/setlist', setlist.all);
@@ -26,6 +28,6 @@ app.post('/api/setlist', setlist.update);
 app.post('/api/filterSetlist', setlist.byTags);
 
 
-app.listen(app.get('port'), function() {
-  console.log('The dark magic is happening at http://localhost:' + app.get('port') + '/');
+app.listen(app.get('port'), function () {
+  console.log('The dark magic is happening at port ' + app.get('port') + '/');
 });
