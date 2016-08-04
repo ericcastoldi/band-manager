@@ -6,26 +6,6 @@ var setlist = new Setlist();
 
 var app = express();
 
-var env = process.env.NODE_ENV || 'development';
-
-var forceSsl = function (req, res, next) {
-  if (req.headers['x-forwarded-proto'] !== 'https') {
-    return res.redirect(['https://', req.get('Host'), req.url].join(''));
-  }
-  return next();
-};
-
-app.configure(function () {
-
-  if (env === 'production') {
-    app.use(forceSsl);
-  }
-
-  // other configurations etc for express go here...
-});
-
-
-
 app.set('port', (process.env.PORT || 3000));
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -49,5 +29,5 @@ app.post('/api/filterSetlist', setlist.byTags);
 
 
 app.listen(app.get('port'), function () {
-  console.log('The dark magic is happening at http://localhost:' + app.get('port') + '/');
+  console.log('The dark magic is happening at port ' + app.get('port') + '/');
 });
