@@ -2,6 +2,12 @@ var songFactory = require('../../api/model/songFactory');
 var actionFactory = require('./actionFactory');
 var axios = require('axios');
 
+/*
+type
+creator
+reducer
+*/
+
 var actions = {
 
   // cleans the selectedSong and the editingSong
